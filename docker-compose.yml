@@ -1,6 +1,6 @@
 services:
   web:
-    container_name: client-frontend
+    container_name: dagobah-task-frontend
     image: node:20-slim
     ports:
       - 8080:8080

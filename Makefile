@@ -1,4 +1,4 @@
-PROJECT_NAME := client-frontend
+PROJECT_NAME := dagobah-task-frontend
 
 up:
 	docker compose up -d

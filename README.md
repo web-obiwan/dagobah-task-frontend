@@ -1,88 +1,82 @@
 # Dagobah Task 🛠️🚀
 
-**Dagobah Task** est un outil open source simple et efficace pour la gestion de tickets liés à **GitLab**. Conçu pour automatiser la création des issues, milestones, et autres tâches, Dagobah Task offre une interface intuitive et moderne grâce à **Vue.js** et **Tailwind CSS**.
+**Dagobah Task** is a simple and efficient open-source tool for managing tickets related to **GitLab**. Designed to automate the creation of issues, milestones, and other tasks, Dagobah Task offers an intuitive and modern interface built with **Vue.js** and **Tailwind CSS**.
 
-## 🚀 Fonctionnalités principales
+## 🚀 Key Features
 
-- **Automatisation GitLab** :
-    - Crée automatiquement des issues basées sur des modèles configurables.
-    - Gère des milestones et autres tâches directement depuis l'interface.
-- **Interface moderne** :
-    - Construit avec **Vue.js** pour une expérience utilisateur réactive et fluide.
-    - Design propre et responsive grâce à **Tailwind CSS**.
-- **Personnalisable** :
-    - Configurez vos workflows pour qu'ils correspondent à vos besoins spécifiques.
-- **Open Source & Collaboratif** :
-    - Contribution ouverte à tous pour enrichir et améliorer le projet.
+- **GitLab Automation**:
+    - Automatically creates issues based on configurable templates.
+    - Manages milestones and other tasks directly from the interface.
+- **Modern Interface**:
+    - Built with **Vue.js** for a reactive and smooth user experience.
+    - Clean, responsive design powered by **Tailwind CSS**.
+- **Customizable**:
+    - Configure workflows to match your specific needs.
+- **Open Source & Collaborative**:
+    - Open to contributions to enrich and improve the project.
 
-## 🎯 Objectif
+## 🎯 Objective
 
-Notre mission est de rendre la gestion des tickets dans GitLab plus rapide et plus intuitive, en éliminant les tâches répétitives et chronophages. Que vous soyez développeur, chef de projet ou membre d'une équipe, Dagobah Task est conçu pour simplifier votre workflow.
+Our mission is to make ticket management in GitLab faster and more intuitive by eliminating repetitive and time-consuming tasks. Whether you’re a developer, project manager, or team member, Dagobah Task is designed to streamline your workflow.
 
 ## 📖 Installation
 
-### Pré-requis
+### Prerequisites
 
-- **Node.js** (version 14 ou supérieure)
-- **npm** ou **yarn**
-- Accès à une instance **GitLab** (API token requis)
+- **Node.js** (version 14 or higher)
+- **npm** or **yarn**
+- Access to a **GitLab** instance (API token required)
 
-### Étapes
+### Steps
 
-1. Clonez le dépôt :
+1. Clone the repository:
 
    ```bash
-   git clone https://github.com/votre-utilisateur/dagobah-task.git
-   cd dagobah-task
+   git clone https://github.com/web-obiwan/dagobah-task-frontend.git
+   cd dagobah-task-frontend
    ```
 
-2. Installez les dépendances :
+2. Install dependencies:
 
    ```bash
    npm install
    ```
 
-3. Configurez vos variables d'environnement dans un fichier `.env` :
+3. Configure your environment variables in a `.env` file:
 
    ```plaintext
-   VUE_APP_GITLAB_API_URL=https://gitlab.com/api/v4
-   VUE_APP_GITLAB_TOKEN=VotreTokenIci
    ```
 
-4. Lancez l'application en mode développement :
+4. Run the application in development mode:
 
    ```bash
-   npm run serve
+   make up
    ```
 
-5. Accédez à l'application via [http://localhost:8080](http://localhost:8080).
+5. Access the application at [http://127.0.0.1:8080/](http://127.0.0.1:8080/).
 
 ## 🤝 Contribution
 
-Nous encourageons la communauté à contribuer activement pour améliorer **Dagobah Task** ! Voici comment vous pouvez aider :
+We encourage the community to actively contribute to improving **Dagobah Task**! Here’s how you can help:
 
-1. **Signalez un bug** : Si vous trouvez un bug, ouvrez une issue dans le dépôt.
-2. **Proposez une fonctionnalité** : Si vous avez une idée géniale, faites-nous savoir !
-3. **Envoyez une pull request** : Vous pouvez directement soumettre vos contributions.
-4. **Aidez à documenter** : Une documentation claire est essentielle pour un projet réussi.
+1. **Report a bug**: If you find a bug, open an issue in the repository.
+2. **Suggest a feature**: If you have a great idea, let us know!
+3. **Submit a pull request**: You can directly submit your contributions.
+4. **Help with documentation**: Clear documentation is crucial for a successful project.
 
-### Guideline pour les contributions
+### Contribution Guidelines
 
-- Forkez le projet.
-- Créez une branche dédiée (`feature/nom-de-la-fonctionnalite` ou `fix/description-du-bug`).
-- Assurez-vous que vos modifications passent les tests (`npm run lint`).
-- Envoyez votre pull request avec une description claire.
+- Fork the project.
+- Create a dedicated branch (`feature/feature-name` or `fix/bug-description`).
+- Ensure your changes pass tests (`npm run lint`).
+- Submit your pull request with a clear description.
 
-## 📜 Licence
+## 📜 License
 
-Ce projet est sous licence [MIT](LICENSE). Vous êtes libre de l'utiliser, de le modifier et de le distribuer.
-
-## 💬 Contact
-
-Pour toute question ou suggestion, n'hésitez pas à nous contacter via [GitHub Issues](https://github.com/votre-utilisateur/dagobah-task/issues) ou par email à [votre-email@example.com](mailto:votre-email@example.com).
+This project is licensed under the [MIT](LICENSE) license. You are free to use, modify, and distribute it.
 
 ---
 
-**Dagobah Task** est un projet communautaire. Avec votre aide, nous pouvons faire de cet outil une solution incontournable pour tous les utilisateurs de GitLab !
+**Dagobah Task** is a community-driven project. With your help, we can make this tool an essential solution for all GitLab users!
 
 ---
