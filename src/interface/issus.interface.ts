@@ -1,0 +1,1 @@
+export type IssusStatusType = "backlog" | "planned" | "inProgress" | "completed" | "canceled";
