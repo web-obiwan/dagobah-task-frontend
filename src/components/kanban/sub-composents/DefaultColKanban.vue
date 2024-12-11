@@ -1,6 +1,6 @@
 <template>
   <Card class="col-span-1 h-full">
-    <CardHeader class="flex flex-row items-center justify-start space-x-2 mb-5">
+    <CardHeader class="flex flex-row items-center justify-start space-x-2 pb-3">
       <component
           :is="issusStatusTransformer(issuStatus).icon"
           :class="cn('w-5 h-5', issusStatusTransformer(issuStatus).color)"
@@ -9,7 +9,7 @@
         {{ issusStatusTransformer(issuStatus).name }}
       </SubTitle>
     </CardHeader>
-    <CardContent>
+    <CardContent class="p-3">
       <draggable
           v-model="data"
           :animation="200"
@@ -26,7 +26,7 @@
         </template>
       </draggable>
     </CardContent>
-    <CardFooter>
+    <CardFooter class="p-3">
       <Button class="w-full flex justify-center items-center" variant="outline" size="icon">
         <Plus class="w-4 h-4" />
       </Button>
