@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <h1>HelloWord</h1>
+  ProjectCreate
 </template>
 
 <style scoped>
