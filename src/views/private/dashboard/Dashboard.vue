@@ -1,11 +1,10 @@
-<script lang="ts" setup>
-
-</script>
-
 <template>
-  Dashbord
+  <DefaultKanban />
 </template>
 
-<style scoped>
+<script lang="ts" setup>
+import DefaultKanban from "@/components/kanban/DefaultKanban.vue";
+</script>
 
-</style>
+
+

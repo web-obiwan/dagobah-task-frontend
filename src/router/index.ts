@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
-import {useSecurityStore} from '@/store/auth.ts';
+//import {useSecurityStore} from '@/store/auth.ts';
 
 import Dashboard from "@/views/private/dashboard/Dashboard.vue";
 import IssusCreate from "@/views/private/issus/IssusCreate.vue";
@@ -96,7 +96,7 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
-
+/*
 router.beforeEach((to, _from, next) => {
     const isAuthenticated = useSecurityStore().isAuthenticated;
     
@@ -108,6 +108,6 @@ router.beforeEach((to, _from, next) => {
         next();
     }
 });
-
+*/
 
 export default router;
