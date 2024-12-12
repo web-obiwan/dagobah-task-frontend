@@ -23,13 +23,57 @@ export const modulesData: Module[] = [
 
 export const linksData: Link[] = [
     {
-        title: 'Dashboard',
-        icon: 'lucide:square-user-round',
-        to: {name: 'Dashboard'},
+        title: 'Inbox',
+        icon: 'lucide:inbox',
+        to: {name: 'Inbox'},
         isActive: true,
         items: [],
     },
-
+    {
+        title: 'Issus',
+        icon: 'lucide:focus',
+        isActive: true,
+        items: [
+            {
+                title: 'Issus',
+                to: {name: 'IssusList'},
+            },
+            {
+                title: 'Create Issus',
+                to: {name: 'IssusCreate'},
+            },
+        ],
+    },
+    {
+        title: 'Sprints',
+        icon: 'lucide:square-kanban',
+        isActive: false,
+        items: [
+            {
+                title: 'Sprint',
+                to: {name: 'MilestonesList'},
+            },
+            {
+                title: 'Create sprint',
+                to: {name: 'MilestonesCreate'},
+            },
+        ],
+    },
+    {
+        title: 'Projects',
+        icon: 'lucide:layout-grid',
+        isActive: false,
+        items: [
+            {
+                title: 'Projects',
+                to: {name: 'ProjectList'},
+            },
+            {
+                title: 'Create project',
+                to: {name: 'ProjectCreate'},
+            },
+        ],
+    },
 ]
 
 // Exemple of navigation data for sidebar

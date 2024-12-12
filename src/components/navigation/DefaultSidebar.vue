@@ -1,5 +1,5 @@
 <template>
-  <SidebarProvider :defaultOpen="false">
+  <SidebarProvider>
     <Sidebar collapsible="icon">
       <SidebarHeader class="bg-white dark:bg-slate-950">
         <SidebarMenu>
