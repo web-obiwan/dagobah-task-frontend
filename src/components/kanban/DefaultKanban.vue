@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-5 gap-4 py-10 h-full mx-5">
+  <div class="grid grid-cols-5 gap-4 h-full">
     <div
         v-for="(items, status) in data"
         :key="status"

@@ -1,7 +1,7 @@
 <template>
   <SidebarProvider>
     <Sidebar collapsible="icon">
-      <SidebarHeader class="bg-white dark:bg-slate-950">
+      <SidebarHeader class="bg-white dark:bg-neutral-950">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
@@ -59,7 +59,7 @@
         </SidebarMenu>
       </SidebarHeader>
       <Separator/>
-      <SidebarContent class="bg-white dark:bg-slate-950">
+      <SidebarContent class="bg-white dark:bg-neutral-950">
         <SidebarGroup>
           <SidebarMenu>
             <Collapsible
@@ -70,7 +70,7 @@
                 class="group/collapsible"
             >
               <SidebarMenuItem v-if="item.items.length === 0"
-                               class="hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+                               class="hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg">
                 <RouterLink
                     :to="item.to || ''"
                 >
@@ -85,7 +85,7 @@
               <SidebarMenuItem v-else>
                 <CollapsibleTrigger as-child>
                   <SidebarMenuButton :tooltip="item.title"
-                                     class="hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+                                     class="hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg">
                     <Icon :icon="item.icon"/>
                     <span>{{ item.title }}</span>
                     <ChevronRight
@@ -98,7 +98,7 @@
                     <SidebarMenuSubItem
                         v-for="subItem in item.items"
                         :key="subItem.title"
-                        class="hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg"
+                        class="hover:bg-neutral-50 dark:hover:bg-neutral-900 rounded-lg"
                     >
                       <RouterLink
                           :to="subItem.to"
@@ -116,7 +116,7 @@
         </SidebarGroup>
       </SidebarContent>
       <Separator/>
-      <SidebarFooter class="bg-white dark:bg-slate-950">
+      <SidebarFooter class="bg-white dark:bg-neutral-950">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
@@ -293,6 +293,6 @@ const openDashboard = () => {
 }
 
 onMounted(() => {
-  user.value = jwtDecode(authStore.getToken || '')
+  //user.value = jwtDecode(authStore.getToken || '')
 })
 </script>

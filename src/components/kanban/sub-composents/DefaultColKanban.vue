@@ -5,9 +5,12 @@
           :is="issusStatusTransformer(issuStatus).icon"
           :class="cn('w-5 h-5', issusStatusTransformer(issuStatus).color)"
       />
-      <SubTitle>
+      <SubTitle class="text-md">
         {{ issusStatusTransformer(issuStatus).name }}
       </SubTitle>
+      <p class="text-sm opacity-40">
+        {{ data.length }}
+      </p>
     </CardHeader>
     <CardContent class="p-3">
       <draggable
@@ -19,12 +22,13 @@
       >
         <template #item="{ element }">
           <div
-              class="dark:bg-slate-950 bg-white shadow-sm border rounded-md p-3 hover:bg-gray-50 cursor-pointer"
+              class="dark:bg-neutral-950 bg-white shadow-sm border rounded-md p-3 hover:bg-gray-50 cursor-pointer"
           >
             <div class="flex flex-col space-y-2">
+              <p class="text-[0.6rem] opacity-40 -mb-2">GAT-01</p>
               <div class="flex items-center space-x-2">
                 <SaveIcon class="w-4 h-4"/>
-                <p class="font-semibold text-sm">{{ element.name }}</p>
+                <p class="text-sm">{{ element.name }}</p>
               </div>
             </div>
             <p class="font-semibold text-[0.65rem] opacity-40 truncate">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet
