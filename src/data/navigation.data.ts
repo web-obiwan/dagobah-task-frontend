@@ -1,23 +1,30 @@
 import {Module, Link} from '@/interface/navigation.interface.ts';
 
+// Repositories favoris de l'utilisateur
 export const modulesData: Module[] = [
     {
-        label: 'Client',
-        subLabel: 'Gestion client',
-        icon: 'lucide:square-user-round',
-        url: '/',
+        label: 'Frontend App',
+        subLabel: 'Application frontend principale',
+        icon: 'lucide:layout-template',
+        url: '/repository/1',
+        repoId: 1,
+        isFavorite: true
     },
     {
-        label: 'Utilisateur',
-        subLabel: 'Gestion utilisateur Cortex',
-        icon: 'lucide:user',
-        url: '/',
+        label: 'Backend API',
+        subLabel: 'API principale',
+        icon: 'lucide:server',
+        url: '/repository/2',
+        repoId: 2,
+        isFavorite: true
     },
     {
-        label: 'Mailing',
-        subLabel: 'Envoie d\'email et SMS aux clients',
-        icon: 'lucide:send',
-        url: '/',
+        label: 'Shared Library',
+        subLabel: 'Composants et utilitaires partagés',
+        icon: 'lucide:library',
+        url: '/repository/3',
+        repoId: 3,
+        isFavorite: true
     }
 ]
 
@@ -32,17 +39,15 @@ export const linksData: Link[] = [
     {
         title: 'Issus',
         icon: 'lucide:focus',
+        to: {name: 'IssusList'},
         isActive: true,
-        items: [
-            {
-                title: 'Issus',
-                to: {name: 'IssusList'},
-            },
-            {
-                title: 'Create Issus',
-                to: {name: 'IssusCreate'},
-            },
-        ],
+        items: [],
+    },
+    { title: 'Projects',
+        icon: 'lucide:layout-grid',
+        to: {name: 'ProjectList'},
+        isActive: true,
+        items: [],
     },
     {
         title: 'Sprints',
@@ -56,21 +61,6 @@ export const linksData: Link[] = [
             {
                 title: 'Create sprint',
                 to: {name: 'MilestonesCreate'},
-            },
-        ],
-    },
-    {
-        title: 'Projects',
-        icon: 'lucide:layout-grid',
-        isActive: false,
-        items: [
-            {
-                title: 'Projects',
-                to: {name: 'ProjectList'},
-            },
-            {
-                title: 'Create project',
-                to: {name: 'ProjectCreate'},
             },
         ],
     },
