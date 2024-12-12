@@ -19,36 +19,38 @@
       >
         <template #item="{ element }">
           <div
-              class="dark:bg-zinc-950 bg-white shadow-sm border rounded-md p-3 flex items-center space-x-2 hover:bg-gray-50 cursor-pointer"
+              class="dark:bg-slate-950 bg-white shadow-sm border rounded-md p-3 hover:bg-gray-50 cursor-pointer"
           >
-            <span class="font-semibold">{{ element.name }}</span>
+            <div class="flex flex-col space-y-2">
+              <div class="flex items-center space-x-2">
+                <SaveIcon class="w-4 h-4"/>
+                <p class="font-semibold text-sm">{{ element.name }}</p>
+              </div>
+            </div>
+            <p class="font-semibold text-[0.65rem] opacity-40 truncate">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet
+              lectus ut mauris semper tempor non in ante. Donec purus magna, aliquam in est id.</p>
           </div>
         </template>
       </draggable>
     </CardContent>
     <CardFooter class="p-3">
-      <Button class="w-full flex justify-center items-center" variant="outline" size="icon">
-        <Plus class="w-4 h-4" />
+      <Button class="w-full flex justify-center items-center" size="icon" variant="outline">
+        <Plus class="w-4 h-4"/>
       </Button>
     </CardFooter>
   </Card>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import draggable from "vuedraggable";
 import {useVModel} from "@vueuse/core";
-import {defineProps, defineEmits} from "vue";
+import {defineEmits, defineProps} from "vue";
 import {issusStatusTransformer} from "@/utils/transformer/status.transformer.utils";
 import {IssusStatusType} from "@/interface/issus.interface.ts";
 import {SubTitle} from "@/components/ui/text";
-import {Plus} from "lucide-vue-next";
+import {Plus, SaveIcon} from "lucide-vue-next";
 import {Button} from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '@/components/ui/card'
+import {Card, CardContent, CardFooter, CardHeader,} from '@/components/ui/card'
 import {cn} from '@/lib/utils'
 
 const props = defineProps<{
