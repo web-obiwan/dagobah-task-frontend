@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
-import {useSecurityStore} from '@/store/auth.ts';
+//import {useSecurityStore} from '@/store/auth.ts';
 
-import Dashboard from "@/views/private/dashboard/Dashboard.vue";
+import Inbox from "@/views/private/inbox/Inbox.vue";
 import IssusCreate from "@/views/private/issus/IssusCreate.vue";
 import IssusEdit from "@/views/private/issus/IssusEdit.vue";
 import IssusList from "@/views/private/issus/IssusList.vue";
@@ -16,14 +16,26 @@ import Login from "@/views/public/login/Login.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
-        path: '',
-        name: 'Dashboard',
-        component: Dashboard,
+        path: '/',
+        component: () => import('@/components/layout/DefaultLayout.vue'),
+        children: [
+            {
+                path: '',
+                name: 'Inbox',
+                component: Inbox,
+                meta: {
+                    breadcrumb: 'Inbox',
+                },
+            },
+        ],
     },
     {
         path: '/setting',
         name: 'Setting',
         component: Setting,
+        meta: {
+            breadcrumb: 'Setting',
+        },
     },
     {
         path: '/login',
@@ -32,41 +44,67 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/issus',
+        component: () => import('@/components/layout/DefaultLayout.vue'),
+        meta: {
+            breadcrumb: 'Issus',
+        },
         children: [
             {
                 path: '',
                 name: 'IssusList',
                 component: IssusList,
+                meta: {
+                    breadcrumb: 'Issus list',
+                },
             },
             {
                 path: '/add',
                 name: 'IssusCreate',
                 component: IssusCreate,
+                meta: {
+                    breadcrumb: 'Create issus',
+                },
             },
             {
                 path: '/:id/edit',
                 name: 'IssusEdit',
                 component: IssusEdit,
+                meta: {
+                    breadcrumb: 'Edit issue',
+                }
             },
         ]
     },
     {
-        path: '/milestones',
+        path: '/sprint',
+        component: () => import('@/components/layout/DefaultLayout.vue'),
+        meta: {
+            breadcrumb: 'Sprint',
+        },
         children: [
             {
                 path: '',
                 name: 'MilestonesList',
                 component: MilestonesList,
+                meta: {
+                    breadcrumb: 'Sprint list',
+                }
             },
             {
                 path: '/add',
                 name: 'MilestonesCreate',
                 component: MilestonesCreate,
+                meta: {
+                    breadcrumb: 'Create sprint',
+                }
             },
             {
                 path: '/:id/edit',
                 name: 'MilestonesEdit',
                 component: MilestonesEdit,
+                meta: {
+                    breadcrumb: 'Edit sprint',
+                }
             },
         ]
     },
@@ -96,7 +134,7 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
-
+/*
 router.beforeEach((to, _from, next) => {
     const isAuthenticated = useSecurityStore().isAuthenticated;
     
@@ -108,6 +146,6 @@ router.beforeEach((to, _from, next) => {
         next();
     }
 });
-
+*/
 
 export default router;

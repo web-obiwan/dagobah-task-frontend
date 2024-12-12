@@ -1,0 +1,298 @@
+<template>
+  <SidebarProvider>
+    <Sidebar collapsible="icon">
+      <SidebarHeader class="bg-white dark:bg-slate-950">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger as-child>
+                <SidebarMenuButton
+                    class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                    size="lg"
+                >
+                  <div
+                      class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                    <Icon :icon="activeModule.icon" class="size-4"/>
+                  </div>
+                  <div class="grid flex-1 text-left text-sm leading-tight">
+                    <span class="truncate font-semibold">{{ activeModule.label }}</span>
+                    <span class="truncate text-xs">{{ activeModule.subLabel }}</span>
+                  </div>
+                  <ChevronsUpDown class="ml-auto"/>
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                  :side-offset="4"
+                  align="start"
+                  class="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                  side="bottom"
+              >
+                <DropdownMenuLabel class="text-xs text-muted-foreground">
+                  Modules
+                </DropdownMenuLabel>
+                <DropdownMenuItem
+                    v-for="(module) in modulesData"
+                    :key="module.label"
+                    class="gap-2 p-2 cursor-pointer"
+                    @click="openModule(module)"
+                >
+                  <div class="flex size-6 items-center justify-center rounded-sm border">
+                    <Icon :icon="module.icon" class="size-4 shrink-0"/>
+                  </div>
+                  <div class="grid flex-1 text-left text-xs leading-tight">
+                    <span class="truncate font-semibold">{{ module.label }}</span>
+                    <span class="truncate text-[0.7rem] opacity-50">{{ module.subLabel }}</span>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator/>
+                <DropdownMenuItem class="gap-2 p-2 cursor-pointer" @click="openDashboard">
+                  <div class="flex size-6 items-center justify-center rounded-md border bg-background">
+                    <ExternalLink class="size-4"/>
+                  </div>
+                  <div class="font-medium text-muted-foreground">
+                    Accéder au dashboard
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <Separator/>
+      <SidebarContent class="bg-white dark:bg-slate-950">
+        <SidebarGroup>
+          <SidebarMenu>
+            <Collapsible
+                v-for="item in linksData"
+                :key="item.title"
+                :default-open="item.isActive"
+                as-child
+                class="group/collapsible"
+            >
+              <SidebarMenuItem v-if="item.items.length === 0"
+                               class="hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+                <RouterLink
+                    :to="item.to || ''"
+                >
+                  <CollapsibleTrigger as-child>
+                    <SidebarMenuButton :tooltip="item.title">
+                      <Icon :icon="item.icon"/>
+                      <span>{{ item.title }}</span>
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                </RouterLink>
+              </SidebarMenuItem>
+              <SidebarMenuItem v-else>
+                <CollapsibleTrigger as-child>
+                  <SidebarMenuButton :tooltip="item.title"
+                                     class="hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+                    <Icon :icon="item.icon"/>
+                    <span>{{ item.title }}</span>
+                    <ChevronRight
+                        class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"/>
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+
+                  <SidebarMenuSub>
+                    <SidebarMenuSubItem
+                        v-for="subItem in item.items"
+                        :key="subItem.title"
+                        class="hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg"
+                    >
+                      <RouterLink
+                          :to="subItem.to"
+                      >
+                        <SidebarMenuSubButton as-child>
+                          <span>{{ subItem.title }}</span>
+                        </SidebarMenuSubButton>
+                      </RouterLink>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
+      <Separator/>
+      <SidebarFooter class="bg-white dark:bg-slate-950">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger as-child>
+                <SidebarMenuButton
+                    class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                    size="lg"
+                >
+                  <Avatar class="h-8 w-8 rounded-lg">
+                    <AvatarFallback class="rounded-lg uppercase">
+                      {{ user.firstname.substring(0, 1) + user.lastname.substring(0, 1) }}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div class="grid flex-1 text-left text-sm leading-tight">
+                    <span class="truncate font-semibold capitalize">{{ user.firstname + ' ' + user.lastname }}</span>
+                    <span class="truncate text-xs">{{ user.email }}</span>
+                  </div>
+                  <ChevronsUpDown class="ml-auto size-4"/>
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent :side-offset="4" align="end"
+                                   class="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg" side="bottom">
+                <DropdownMenuLabel class="p-0 font-normal">
+                  <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                    <Avatar class="h-8 w-8 rounded-lg">
+                      <AvatarFallback class="rounded-lg uppercase">
+                        {{ user.firstname.substring(0, 1) + user.lastname.substring(0, 1) }}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div class="grid flex-1 text-left text-sm leading-tight">
+                      <span class="truncate font-semibold capitalize">{{ user.firstname + ' ' + user.lastname }}</span>
+                      <span class="truncate text-xs">{{ user.email }}</span>
+                    </div>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator/>
+                <DropdownMenuGroup>
+                  <DropdownMenuItem class="cursor-pointer" @click="onDarkMode">
+                    <SunMoon/>
+                    Modifier les couleurs
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator/>
+                <DropdownMenuItem class="cursor-pointer" @click="handleLogout">
+                  <LogOut/>
+                  Déconnexion
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+      <SidebarRail/>
+    </Sidebar>
+    <SidebarInset>
+      <header
+          class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+        <div class="flex items-center gap-2 px-4">
+          <SidebarTrigger class="-ml-1"/>
+          <Separator class="mr-2 h-4" orientation="vertical"/>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem
+                  v-for="(crumb, index) in breadcrumbs"
+                  :key="index"
+                  class="hidden md:flex items-center space-x-2"
+              >
+                <BreadcrumbLink
+                    v-if="crumb.path"
+                    :href="crumb.path"
+                >
+                  {{ crumb.label }}
+                </BreadcrumbLink>
+                <BreadcrumbPage v-else>
+                  {{ crumb.label }}
+                </BreadcrumbPage>
+                <BreadcrumbSeparator v-if="index < breadcrumbs.length - 1" class="hidden md:block"/>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </header>
+      <slot/>
+    </SidebarInset>
+  </SidebarProvider>
+</template>
+
+<script lang=ts setup>
+import {computed, onMounted, ref} from 'vue'
+import {Avatar, AvatarFallback,} from '@/components/ui/avatar'
+
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
+
+import {Collapsible, CollapsibleContent, CollapsibleTrigger,} from '@/components/ui/collapsible'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import {Separator} from '@/components/ui/separator'
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
+import {ChevronRight, ChevronsUpDown, ExternalLink, LogOut, SunMoon,} from 'lucide-vue-next'
+import {useRoute} from 'vue-router';
+
+import {linksData, modulesData} from '@/data/navigation.data.ts';
+import {Icon} from "@iconify/vue";
+import {Module} from "@/interface/navigation.interface.ts";
+import {useColorMode} from '@vueuse/core'
+import {useSecurityStore} from '@/store/auth.ts';
+import {jwtDecode} from "jwt-decode";
+
+const route = useRoute();
+let mode = useColorMode()
+const authStore = useSecurityStore();
+const user = ref({
+  firstname: '',
+  lastname: '',
+  email: '',
+})
+
+const activeModule = ref(modulesData[0])
+
+const breadcrumbs = computed(() => {
+  return route.matched.map((r, index) => ({
+    label: r.meta.breadcrumb || r.name,
+    path: index < route.matched.length - 1 ? r.path : null,
+  }));
+});
+
+const handleLogout = () => {
+  useSecurityStore().logout()
+  window.location.assign('/');
+}
+
+const onDarkMode = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  mode.value === 'light' ? mode.value = 'dark' : mode.value = 'light'
+}
+
+const openModule = (module: Module) => {
+  window.open(module.url, '_blank');
+}
+
+const openDashboard = () => {
+  const dashboardUrl = import.meta.env.VITE_URL_DASHBOARD_CORTEX;
+  window.open(dashboardUrl, '_blank');
+}
+
+onMounted(() => {
+  user.value = jwtDecode(authStore.getToken || '')
+})
+</script>

@@ -1,23 +1,21 @@
-import { XiorInstance, XiorRequestConfig, XiorError } from 'xior';
+import { XiorInstance, XiorInterceptorRequestConfig, XiorError } from 'xior';
 import { useSecurityStore } from '@/store/auth.ts';
 
 export function createAxiosRequestInterceptor(instance: XiorInstance): void {
     instance.interceptors.request.use(
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        (config: XiorRequestConfig) => {
+        (config: XiorInterceptorRequestConfig): XiorInterceptorRequestConfig => {
             const tokenPromise = useSecurityStore().tokenPromise;
+            
             if (tokenPromise) {
                 config.headers = {
                     ...config.headers,
-                    Authorization: `Bearer ${tokenPromise}`
+                    Authorization: `Bearer ${tokenPromise}`,
                 };
             }
+            
             return config;
         },
-        (error: XiorError) => {
-            return Promise.reject(error);
-        }
+        (error: XiorError) => Promise.reject(error)
     );
 }
 
@@ -31,11 +29,12 @@ export function createAxiosResponseInterceptor(XiorInstance: XiorInstance): void
             if (error.response && (error.response.status === 401 || error.response.status === 500) && originalConfig && error.config) {
                 if (error.config.url?.includes('token/refresh_user_api')) {
                     useSecurityStore().logout();
+                    window.location.assign('/');
                     throw error;
                 } else {
                     try {
                         await useSecurityStore().refreshToken();
-
+                        
                         return XiorInstance.request(originalConfig);
                     } catch (e) {
                         console.error(e);

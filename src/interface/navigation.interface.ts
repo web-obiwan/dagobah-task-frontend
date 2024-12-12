@@ -1,14 +1,25 @@
 export interface Link {
-    title: string
-    label?: string
+    title: string;
+    icon: string;
+    isActive: boolean;
+    to?: {
+        name: string;
+        params?: Record<string, any>;
+        query?: Record<string, any>;
+    };
+    items: SubLink[];
+}
+
+export interface SubLink {
+    title: string;
     to: {
         name: string;
         params?: Record<string, any>;
         query?: Record<string, any>;
     };
-    icon: string
-    variant: 'default' | 'ghost'
 }
+
+
 export interface ButtonAction {
     title: string
     action: object
@@ -19,4 +30,6 @@ export interface ButtonAction {
 export interface Module {
     icon: string;
     label: string
+    subLabel: string
+    url: string
 }
