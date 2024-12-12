@@ -16,9 +16,15 @@ import Login from "@/views/public/login/Login.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
-        path: '',
-        name: 'Dashboard',
-        component: Dashboard,
+        path: '/',
+        component: () => import('@/components/layout/DefaultLayout.vue'),
+        children: [
+            {
+                path: '',
+                name: 'Dashboard',
+                component: Dashboard,
+            },
+        ],
     },
     {
         path: '/setting',
@@ -32,6 +38,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/issus',
+        component: () => import('@/components/layout/DefaultLayout.vue'),
         children: [
             {
                 path: '',
@@ -52,6 +59,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/milestones',
+        component: () => import('@/components/layout/DefaultLayout.vue'),
         children: [
             {
                 path: '',
