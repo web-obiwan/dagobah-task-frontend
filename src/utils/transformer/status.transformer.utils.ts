@@ -1,7 +1,7 @@
 import {CircleCheck, CircleDotDashed, CircleFadingArrowUp, CircleGauge, CircleOff} from "lucide-vue-next";
-import {IssusStatusType} from "@/interface/issus.interface.ts";
+import {IssusStatus} from "@/interface/issus.interface.ts";
 
-export const issusStatusTransformer = (status: IssusStatusType) => {
+export const issusStatusTransformer = (status: IssusStatus) => {
     let dateReturn = {
         name: 'Backlog',
         icon: CircleDotDashed,

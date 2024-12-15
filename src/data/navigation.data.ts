@@ -32,17 +32,9 @@ export const linksData: Link[] = [
     {
         title: 'Issus',
         icon: 'lucide:focus',
+        to: {name: 'IssusList'},
         isActive: true,
-        items: [
-            {
-                title: 'Issus',
-                to: {name: 'IssusList'},
-            },
-            {
-                title: 'Create Issus',
-                to: {name: 'IssusCreate'},
-            },
-        ],
+        items: [],
     },
     {
         title: 'Sprints',

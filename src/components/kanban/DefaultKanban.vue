@@ -14,28 +14,27 @@
 </template>
 
 <script lang="ts" setup>
-import {ref} from 'vue'
+import {ref, watch} from 'vue'
 import DefaultColKanban from "@/components/kanban/sub-composents/DefaultColKanban.vue";
 
-const data = ref({
-  backlog: [
-    { name: "Task 1", id: 1 },
-    { name: "Task 2", id: 2 },
-    { name: "Task 3", id: 3 },
-  ],
-  planned: [
-    { name: "Task 4", id: 4 },
-    { name: "Task 5", id: 5 },
-  ],
-  inProgress: [
-    { name: "Task 6", id: 6 },
-    { name: "Task 7", id: 7 },
-  ],
-  completed: [
-    { name: "Task 8", id: 8 },
-  ],
-  canceled: [
-    { name: "Task 9", id: 9 },
-  ],
-});
+const props = defineProps<{
+  modelValue: {
+    backlog: Array<{ name: string; id: number }>;
+    planned: Array<{ name: string; id: number }>;
+    inProgress: Array<{ name: string; id: number }>;
+    completed: Array<{ name: string; id: number }>;
+    canceled: Array<{ name: string; id: number }>;
+  }
+}>();
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: typeof props.modelValue): void
+}>();
+
+const data = ref(props.modelValue);
+
+// Watch for changes in the data and emit updates
+watch(data, (newValue) => {
+  emit('update:modelValue', newValue);
+}, { deep: true });
 </script>
