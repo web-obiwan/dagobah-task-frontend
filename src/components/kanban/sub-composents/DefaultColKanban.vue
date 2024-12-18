@@ -9,7 +9,7 @@
         {{ issusStatusTransformer(issuStatus).name }}
       </SubTitle>
       <p class="text-sm opacity-40">
-        {{ data.length }}
+        {{ data?.length || 0 }}
       </p>
     </CardHeader>
     <CardContent class="p-3">
@@ -21,31 +21,39 @@
           itemKey="id"
       >
         <template #item="{ element }">
-          <div
-              class="dark:bg-neutral-950 bg-white shadow-sm border rounded-md p-3 hover:bg-gray-50 cursor-pointer"
+          <RouterLink
+            :to="{ 
+              name: 'IssusEdit',
+              params: { id: element.id }
+            }"
+            class="block"
           >
-            <div class="flex flex-col space-y-2">
-              <p class="text-[0.6rem] opacity-40 -mb-2">{{ element.reference }}</p>
-              <div class="flex items-center space-x-2">
-                <component
-                  :is="issusStatusTransformer(element.status).icon"
-                  :class="cn('w-4 h-4', issusStatusTransformer(element.status).color)"
-                />
-                <p class="text-sm">{{ element.name }}</p>
+            <div
+                class="dark:bg-neutral-950 bg-white shadow-sm border rounded-md p-3 hover:bg-gray-50 cursor-pointer"
+            >
+              <div class="flex flex-col space-y-2">
+                <p class="text-[0.6rem] opacity-40 -mb-2">{{ element.reference }}</p>
+                <div class="flex items-center space-x-2">
+                  <component
+                    :is="issusStatusTransformer(element.status).icon"
+                    :class="cn('w-4 h-4', issusStatusTransformer(element.status).color)"
+                  />
+                  <p class="text-sm">{{ element.name }}</p>
+                </div>
+              </div>
+              <p class="font-semibold text-[0.65rem] opacity-40 truncate">{{ element.description }}</p>
+              <div class="flex flex-wrap gap-1 mt-2">
+                <span 
+                  v-for="label in element.labels" 
+                  :key="label"
+                  class="px-2 py-0.5 rounded-full text-[0.6rem] font-medium"
+                  :class="getLabelStyle(label)"
+                >
+                  {{ label }}
+                </span>
               </div>
             </div>
-            <p class="font-semibold text-[0.65rem] opacity-40 truncate">{{ element.description }}</p>
-            <div class="flex flex-wrap gap-1 mt-2">
-              <span 
-                v-for="label in element.labels" 
-                :key="label"
-                class="px-2 py-0.5 rounded-full text-[0.6rem] font-medium"
-                :class="getLabelStyle(label)"
-              >
-                {{ label }}
-              </span>
-            </div>
-          </div>
+          </RouterLink>
         </template>
       </draggable>
     </CardContent>
@@ -57,22 +65,23 @@ import draggable from "vuedraggable";
 import {useVModel} from "@vueuse/core";
 import {defineEmits, defineProps, watch} from "vue";
 import {issusStatusTransformer} from "@/utils/transformer/status.transformer.utils";
-import {IssusStatusType} from "@/interface/issus.interface.ts";
+import {IssusStatus} from "@/interface/issus.interface.ts";
 import {SubTitle} from "@/components/ui/text";
 import {Card, CardContent, CardHeader,} from '@/components/ui/card'
 import {cn} from '@/lib/utils'
 import {getLabelStyle} from "@/utils/transformer/label.transformer.utils";
+import {RouterLink} from 'vue-router';
 
 const props = defineProps<{
   data?: Array<{
     name: string;
     id: number;
     reference: string;
-    status: IssusStatusType;
+    status: IssusStatus;
     description: string;
     labels?: string[];
   }>;
-  issuStatus: IssusStatusType;
+  issuStatus: IssusStatus;
 }>();
 
 const emits = defineEmits<{
@@ -80,7 +89,7 @@ const emits = defineEmits<{
     name: string;
     id: number;
     reference: string;
-    status: IssusStatusType;
+    status: IssusStatus;
     description: string;
     labels?: string[];
   }>): void;

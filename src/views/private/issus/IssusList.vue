@@ -1,4 +1,5 @@
 <template>
+<div class="p-5">
   <div class="mb-5 flex space-x-2">
     <div class="relative w-full max-w-sm items-center">
       <Input 
@@ -19,6 +20,7 @@
     :modelValue="kanbanData" 
     @update:modelValue="handleKanbanUpdate"
   />
+</div>
 </template>
 
 <script lang="ts" setup>

@@ -2,7 +2,7 @@
   <div class="h-full w-full">
     <TooltipProvider :delay-duration="0">
       <DefaultSidebar :defaultLayout="defaultLayout" :links="linksData" :modules="modulesData">
-        <main class="p-5">
+        <main>
           <router-view/>
         </main>
       </DefaultSidebar>
