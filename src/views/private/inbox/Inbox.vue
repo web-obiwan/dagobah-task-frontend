@@ -1,9 +1,14 @@
 <template>
-  <DefaultKanban />
-</template>
+<DefaultDataTable :columns="columns" :data="mockIssusData">
+   
+  </DefaultDataTable>
+  </template>
 
 <script lang="ts" setup>
-import DefaultKanban from "@/components/kanban/DefaultKanban.vue";
+import {inboxColumns} from "@/views/private/inbox/components/columns";
+import {mockIssusData} from "@/mock/issus.mock";
+
+const columns = inboxColumns();
 </script>
 
 

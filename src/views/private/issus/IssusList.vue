@@ -12,6 +12,7 @@
         <Search class="size-6 text-muted-foreground" />
       </span>
     </div>
+    <DefaultFilterBtn />
     <IssusCreate @create="handleIssueCreate" />
   </div>
   <DefaultKanban 
@@ -29,6 +30,7 @@ import { mockIssusData } from '@/mock/issus.mock'
 
 import DefaultKanban from "@/components/kanban/DefaultKanban.vue";
 import IssusCreate from "@/components/issus/IssusCreate.vue";
+import DefaultFilterBtn from "@/components/filter/DefaultFilterBtn.vue";
 
 const searchQuery = ref('');
 

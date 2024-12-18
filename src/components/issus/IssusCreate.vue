@@ -1,7 +1,7 @@
 <template>
   <Dialog>
     <DialogTrigger asChild>
-      <Button class="py-[1.18rem]" variant="outline">Create Issue</Button>
+      <Button class="py-[1.17rem]" variant="outline">Create Issue</Button>
     </DialogTrigger>
     <DialogContent class="sm:max-w-[800px]">
       <DialogHeader>
@@ -40,6 +40,11 @@
               rows="5"
             />
           </div>
+
+          <div class="flex items-center space-x-2">
+            <Switch id="gitlab-sync" v-model="form.syncWithGitlab" />
+            <Label for="gitlab-sync">Sync with GitLab</Label>
+          </div>
         </div>
         <DialogFooter>
           <Button type="submit">Create Issue</Button>
@@ -64,6 +69,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { Switch } from '@/components/ui/switch'
 
 import ProjectSelect from './form/ProjectSelect.vue'
 import AssigneeSelect from './form/AssigneeSelect.vue'
@@ -86,6 +92,7 @@ const form = ref({
   status: 'backlog',
   assignee: null as User | null,
   sprint: null as Sprint | null,
+  syncWithGitlab: true,
   labels: []
 })
 
@@ -109,6 +116,7 @@ const onSubmit = () => {
     status: 'backlog',
     assignee: null,
     sprint: null,
+    syncWithGitlab: true,
     labels: []
   }
 }
