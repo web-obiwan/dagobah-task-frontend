@@ -8,9 +8,8 @@ import IssusList from "@/views/private/issus/IssusList.vue";
 import MilestonesCreate from "@/views/private/milestones/MilestonesCreate.vue";
 import MilestonesEdit from "@/views/private/milestones/MilestonesEdit.vue";
 import MilestonesList from "@/views/private/milestones/MilestonesList.vue";
-import ProjectCreate from "@/views/private/project/ProjectCreate.vue";
-import ProjectEdit from "@/views/private/project/ProjectEdit.vue";
-import ProjectList from "@/views/private/project/ProjectList.vue";
+import ProjectEdit from "@/views/private/projects/ProjectEdit.vue";
+import ProjectList from "@/views/private/projects/ProjectList.vue";
 import Setting from "@/views/private/settings/Setting.vue";
 import Login from "@/views/public/login/Login.vue";
 
@@ -110,21 +109,26 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/project',
+        component: () => import('@/components/layout/DefaultLayout.vue'),
+        meta: {
+            breadcrumb: 'Project',
+        },
         children: [
             {
                 path: '',
                 name: 'ProjectList',
                 component: ProjectList,
-            },
-            {
-                path: '/add',
-                name: 'ProjectCreate',
-                component: ProjectCreate,
+                meta: {
+                    breadcrumb: 'Project list',
+                },
             },
             {
                 path: '/:id/edit',
                 name: 'ProjectEdit',
                 component: ProjectEdit,
+                meta: {
+                    breadcrumb: 'Edit project',
+                },
             },
         ]
     }

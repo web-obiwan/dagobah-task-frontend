@@ -81,76 +81,19 @@
           <!-- Properties Content -->
           <div class="p-4 space-y-4">
             <!-- Status -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <ActivitySquare class="h-4 w-4 text-muted-foreground" />
-                <span class="text-sm">Status</span>
-              </div>
-              <Select v-model="issus.status">
-                <SelectTrigger class="w-32">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem v-for="status in statuses" :key="status" :value="status">
-                    {{ status }}
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <StatusSelect v-model="issus.status" />
 
             <!-- Priority -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <ArrowUpCircle class="h-4 w-4 text-muted-foreground" />
-                <span class="text-sm">Priority</span>
-              </div>
-              <Select v-model="issus.priority">
-                <SelectTrigger class="w-32">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem v-for="priority in priorities" :key="priority" :value="priority">
-                    {{ priority }}
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <!-- Assignee -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <User2 class="h-4 w-4 text-muted-foreground" />
-                <span class="text-sm">Assignee</span>
-              </div>
-              <AssigneeSelect v-model="issus.assignee" />
-            </div>
-
-            <!-- Labels -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <Tags class="h-4 w-4 text-muted-foreground" />
-                <span class="text-sm">Labels</span>
-              </div>
-              <Select v-model="issus.labels" multiple>
-                <SelectTrigger class="w-32">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem v-for="label in availableLabels" :key="label" :value="label">
-                    {{ label }}
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <PrioritySelect v-model="issus.priority" />
 
             <!-- Project -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <FolderGit2 class="h-4 w-4 text-muted-foreground" />
-                <span class="text-sm">Project</span>
-              </div>
-              <ProjectSelect v-model="issus.project" />
-            </div>
+            <ProjectSelect v-model="issus.project" />
+
+            <!-- Assignee -->
+            <AssigneeSelect v-model="issus.assignee" />
+
+            <!-- Sprint -->
+            <SprintSelect v-model="issus.sprint" />
           </div>
         </div>
       </div>
@@ -163,18 +106,16 @@ import { ref, computed } from 'vue'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { Button } from '@/components/ui/button'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { Separator } from '@/components/ui/separator'
+import StatusSelect from '@/components/issus/form/StatusSelect.vue'
+import PrioritySelect from '@/components/issus/form/PrioritySelect.vue'
+import ProjectSelect from '@/components/issus/form/ProjectSelect.vue'
+import AssigneeSelect from '@/components/issus/form/AssigneeSelect.vue'
+import SprintSelect from '@/components/issus/form/SprintSelect.vue'
 
 import {
   Link,
@@ -185,9 +126,6 @@ import {
   Tags,
   FolderGit2,
 } from 'lucide-vue-next'
-import AssigneeSelect from '@/components/issus/form/AssigneeSelect.vue'
-import ProjectSelect from '@/components/issus/form/ProjectSelect.vue'
-import type { Issus, IssusStatus } from '@/interface/issus.interface'
 
 const props = defineProps<{
   modelValue: Issus
