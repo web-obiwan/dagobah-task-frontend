@@ -19,7 +19,6 @@ export interface SubLink {
     };
 }
 
-
 export interface ButtonAction {
     title: string
     action: object
@@ -29,7 +28,9 @@ export interface ButtonAction {
 
 export interface Module {
     icon: string;
-    label: string
-    subLabel: string
-    url: string
+    label: string;
+    subLabel?: string;
+    url: string;
+    repoId: number;
+    isFavorite: boolean;
 }

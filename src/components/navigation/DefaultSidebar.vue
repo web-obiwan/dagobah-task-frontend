@@ -50,7 +50,7 @@
                     <ExternalLink class="size-4"/>
                   </div>
                   <div class="font-medium text-muted-foreground">
-                    Accéder au dashboard
+                    Accéder au Gitlab
                   </div>
                 </DropdownMenuItem>
               </DropdownMenuContent>

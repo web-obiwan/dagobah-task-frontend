@@ -65,7 +65,7 @@ import draggable from "vuedraggable";
 import {useVModel} from "@vueuse/core";
 import {defineEmits, defineProps, watch} from "vue";
 import {issusStatusTransformer} from "@/utils/transformer/status.transformer.utils";
-import {IssusStatus} from "@/interface/issus.interface.ts";
+import {IssuesStatus} from "@/interface/issus.interface.ts";
 import {SubTitle} from "@/components/ui/text";
 import {Card, CardContent, CardHeader,} from '@/components/ui/card'
 import {cn} from '@/lib/utils'
@@ -77,11 +77,11 @@ const props = defineProps<{
     name: string;
     id: number;
     reference: string;
-    status: IssusStatus;
+    status: IssuesStatus;
     description: string;
     labels?: string[];
   }>;
-  issuStatus: IssusStatus;
+  issuStatus: IssuesStatus;
 }>();
 
 const emits = defineEmits<{
@@ -89,7 +89,7 @@ const emits = defineEmits<{
     name: string;
     id: number;
     reference: string;
-    status: IssusStatus;
+    status: IssuesStatus;
     description: string;
     labels?: string[];
   }>): void;

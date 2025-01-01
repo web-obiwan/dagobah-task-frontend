@@ -1,11 +1,13 @@
 import type { User } from './user.interface';
 import type { Sprint } from './sprint.interface';
 
-export type IssusStatus = 'backlog' | 'planned' | 'inProgress' | 'completed' | 'canceled';
+export type IssuesStatus = 'backlog' | 'planned' | 'inProgress' | 'completed' | 'canceled';
+export type IssuesPriority = 'high' | 'medium' | 'low';
 
 export interface Project {
   id: number;
   name: string;
+  icon?: string;  // Optional icon property
 }
 
 export interface Issus {
@@ -13,7 +15,7 @@ export interface Issus {
   name: string;
   reference: string;  // e.g., "GAT-01"
   description: string;
-  status: IssusStatus;
+  status: IssuesStatus;
   priority: 'low' | 'medium' | 'high';
   project: Project;
   sprint?: Sprint;

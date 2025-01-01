@@ -56,13 +56,13 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { issusStatusTransformer } from '@/utils/transformer/status.transformer.utils'
-import type { IssusStatus } from '@/interface/issus.interface'
+import type { IssuesStatus } from '@/interface/issus.interface'
 
 defineProps<{
-  modelValue: IssusStatus
+  modelValue: IssuesStatus
 }>()
 
 defineEmits<{
-  (e: 'update:modelValue', value: IssusStatus): void
+  (e: 'update:modelValue', value: IssuesStatus): void
 }>()
 </script>
