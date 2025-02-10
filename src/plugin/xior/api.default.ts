@@ -3,7 +3,7 @@ import {createAxiosRequestInterceptor, createAxiosResponseInterceptor} from '@/p
 import cachePlugin from 'xior/plugins/cache';
 
 const instance = xior.create({
-    baseURL: import.meta.env.VITE_API_URL as string,
+    baseURL: `${import.meta.env.VITE_API_URL}/api`,
 });
 
 instance.plugins.use(

@@ -1,0 +1,7 @@
+export enum IssuesStatus {
+    BACKLOG = 'BACKLOG',
+    PLANNED = 'PLANNED',
+    IN_PROGRESS = 'IN_PROGRESS',
+    COMPLETED = 'COMPLETED',
+    CANCELED = 'CANCELED'
+}

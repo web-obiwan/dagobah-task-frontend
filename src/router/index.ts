@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
-//import {useSecurityStore} from '@/store/auth.ts';
+import {useSecurityStore} from '@/store/auth.ts';
 
 import Inbox from "@/views/private/inbox/Inbox.vue";
 import IssusCreate from "@/views/private/issus/IssusCreate.vue";
@@ -8,16 +8,26 @@ import IssusList from "@/views/private/issus/IssusList.vue";
 import MilestonesCreate from "@/views/private/milestones/MilestonesCreate.vue";
 import MilestonesEdit from "@/views/private/milestones/MilestonesEdit.vue";
 import MilestonesList from "@/views/private/milestones/MilestonesList.vue";
-import ProjectCreate from "@/views/private/project/ProjectCreate.vue";
-import ProjectEdit from "@/views/private/project/ProjectEdit.vue";
-import ProjectList from "@/views/private/project/ProjectList.vue";
+import ProjectEdit from "@/views/private/projects/ProjectEdit.vue";
+import ProjectList from "@/views/private/projects/ProjectList.vue";
 import Setting from "@/views/private/settings/Setting.vue";
 import Login from "@/views/public/login/Login.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
+        path: '/login',
+        name: 'Login',
+        component: Login,
+        meta: {
+            public: true // Route publique
+        }
+    },
+    {
         path: '/',
         component: () => import('@/components/layout/DefaultLayout.vue'),
+        meta: {
+            requiresAuth: true // Route privée
+        },
         children: [
             {
                 path: '',
@@ -25,28 +35,35 @@ const routes: Array<RouteRecordRaw> = [
                 component: Inbox,
                 meta: {
                     breadcrumb: 'Inbox',
+                    requiresAuth: true
                 },
             },
         ],
     },
     {
-        path: '/setting',
-        name: 'Setting',
-        component: Setting,
+        path: '/settings',
+        component: () => import('@/components/layout/DefaultLayout.vue'),
         meta: {
-            breadcrumb: 'Setting',
+            requiresAuth: true
         },
-    },
-    {
-        path: '/login',
-        name: 'Login',
-        component: Login,
+        children: [
+            {
+                path: '',
+                name: 'Setting',
+                component: Setting,
+                meta: {
+                    breadcrumb: 'Settings',
+                    requiresAuth: true
+                },
+            },
+        ],
     },
     {
         path: '/issus',
         component: () => import('@/components/layout/DefaultLayout.vue'),
         meta: {
             breadcrumb: 'Issus',
+            requiresAuth: true
         },
         children: [
             {
@@ -55,6 +72,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: IssusList,
                 meta: {
                     breadcrumb: 'Issus list',
+                    requiresAuth: true
                 },
             },
             {
@@ -63,6 +81,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: IssusCreate,
                 meta: {
                     breadcrumb: 'Create issus',
+                    requiresAuth: true
                 },
             },
             {
@@ -71,6 +90,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: IssusEdit,
                 meta: {
                     breadcrumb: 'Edit issue',
+                    requiresAuth: true
                 }
             },
         ]
@@ -80,6 +100,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/components/layout/DefaultLayout.vue'),
         meta: {
             breadcrumb: 'Sprint',
+            requiresAuth: true
         },
         children: [
             {
@@ -88,6 +109,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: MilestonesList,
                 meta: {
                     breadcrumb: 'Sprint list',
+                    requiresAuth: true
                 }
             },
             {
@@ -96,6 +118,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: MilestonesCreate,
                 meta: {
                     breadcrumb: 'Create sprint',
+                    requiresAuth: true
                 }
             },
             {
@@ -104,27 +127,36 @@ const routes: Array<RouteRecordRaw> = [
                 component: MilestonesEdit,
                 meta: {
                     breadcrumb: 'Edit sprint',
+                    requiresAuth: true
                 }
             },
         ]
     },
     {
         path: '/project',
+        component: () => import('@/components/layout/DefaultLayout.vue'),
+        meta: {
+            breadcrumb: 'Project',
+            requiresAuth: true
+        },
         children: [
             {
                 path: '',
                 name: 'ProjectList',
                 component: ProjectList,
-            },
-            {
-                path: '/add',
-                name: 'ProjectCreate',
-                component: ProjectCreate,
+                meta: {
+                    breadcrumb: 'Project list',
+                    requiresAuth: true
+                },
             },
             {
                 path: '/:id/edit',
                 name: 'ProjectEdit',
                 component: ProjectEdit,
+                meta: {
+                    breadcrumb: 'Edit project',
+                    requiresAuth: true
+                },
             },
         ]
     }
@@ -134,18 +166,19 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
-/*
+
 router.beforeEach((to, _from, next) => {
     const isAuthenticated = useSecurityStore().isAuthenticated;
-    
-    if (to.path === '/') {
-        next();
-    } else if (!isAuthenticated) {
+    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+    const isPublic = to.matched.some(record => record.meta.public);
+
+    if (requiresAuth && !isAuthenticated) {
+        next('/login');
+    } else if (isPublic && isAuthenticated) {
         next('/');
     } else {
         next();
     }
 });
-*/
 
 export default router;

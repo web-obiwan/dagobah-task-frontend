@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia'
 import AuthenticationService from "@/services/auh.service.ts";
 import {jwtDecode} from "jwt-decode";
+import {LoginData} from "@/interface/response.auth.interface.ts";
 
 interface User {
     exp: number,
@@ -46,6 +47,9 @@ export const useSecurityStore = defineStore('security', {
         },
         refreshToken(this: SecurityState) {
             return AuthenticationService.refreshToken()
+        },
+        login(this: SecurityState, data: LoginData) {
+            return AuthenticationService.login(data)
         }
     },
     persist: true

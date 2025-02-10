@@ -1,7 +1,7 @@
 <template>
   <SidebarProvider>
     <Sidebar collapsible="icon">
-      <SidebarHeader class="bg-white dark:bg-slate-950">
+      <SidebarHeader class="bg-white dark:bg-neutral-950">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
@@ -50,7 +50,7 @@
                     <ExternalLink class="size-4"/>
                   </div>
                   <div class="font-medium text-muted-foreground">
-                    Accéder au dashboard
+                    Accéder au Gitlab
                   </div>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -59,7 +59,7 @@
         </SidebarMenu>
       </SidebarHeader>
       <Separator/>
-      <SidebarContent class="bg-white dark:bg-slate-950">
+      <SidebarContent class="bg-white dark:bg-neutral-950">
         <SidebarGroup>
           <SidebarMenu>
             <Collapsible
@@ -70,7 +70,7 @@
                 class="group/collapsible"
             >
               <SidebarMenuItem v-if="item.items.length === 0"
-                               class="hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+                               class="hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg">
                 <RouterLink
                     :to="item.to || ''"
                 >
@@ -85,7 +85,7 @@
               <SidebarMenuItem v-else>
                 <CollapsibleTrigger as-child>
                   <SidebarMenuButton :tooltip="item.title"
-                                     class="hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+                                     class="hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg">
                     <Icon :icon="item.icon"/>
                     <span>{{ item.title }}</span>
                     <ChevronRight
@@ -98,7 +98,7 @@
                     <SidebarMenuSubItem
                         v-for="subItem in item.items"
                         :key="subItem.title"
-                        class="hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg"
+                        class="hover:bg-neutral-50 dark:hover:bg-neutral-900 rounded-lg"
                     >
                       <RouterLink
                           :to="subItem.to"
@@ -116,7 +116,7 @@
         </SidebarGroup>
       </SidebarContent>
       <Separator/>
-      <SidebarFooter class="bg-white dark:bg-slate-950">
+      <SidebarFooter class="bg-white dark:bg-neutral-950">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
@@ -127,11 +127,11 @@
                 >
                   <Avatar class="h-8 w-8 rounded-lg">
                     <AvatarFallback class="rounded-lg uppercase">
-                      {{ user.firstname.substring(0, 1) + user.lastname.substring(0, 1) }}
+                      {{ user.username.substring(0, 2)}}
                     </AvatarFallback>
                   </Avatar>
                   <div class="grid flex-1 text-left text-sm leading-tight">
-                    <span class="truncate font-semibold capitalize">{{ user.firstname + ' ' + user.lastname }}</span>
+                    <span class="truncate font-semibold capitalize">{{ user.username}}</span>
                     <span class="truncate text-xs">{{ user.email }}</span>
                   </div>
                   <ChevronsUpDown class="ml-auto size-4"/>
@@ -143,26 +143,32 @@
                   <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar class="h-8 w-8 rounded-lg">
                       <AvatarFallback class="rounded-lg uppercase">
-                        {{ user.firstname.substring(0, 1) + user.lastname.substring(0, 1) }}
+                        {{ user.username.substring(0, 2)}}
                       </AvatarFallback>
                     </Avatar>
                     <div class="grid flex-1 text-left text-sm leading-tight">
-                      <span class="truncate font-semibold capitalize">{{ user.firstname + ' ' + user.lastname }}</span>
+                      <span class="truncate font-semibold capitalize">{{ user.username }}</span>
                       <span class="truncate text-xs">{{ user.email }}</span>
                     </div>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator/>
                 <DropdownMenuGroup>
+                  <DropdownMenuItem class="cursor-pointer" @click="router.push({name: 'Setting'})">
+                    <Settings/>
+                    Settings
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuGroup>
                   <DropdownMenuItem class="cursor-pointer" @click="onDarkMode">
                     <SunMoon/>
-                    Modifier les couleurs
+                    Change color
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator/>
                 <DropdownMenuItem class="cursor-pointer" @click="handleLogout">
                   <LogOut/>
-                  Déconnexion
+                  Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -207,7 +213,6 @@
 <script lang=ts setup>
 import {computed, onMounted, ref} from 'vue'
 import {Avatar, AvatarFallback,} from '@/components/ui/avatar'
-
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -245,7 +250,7 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from '@/components/ui/sidebar'
-import {ChevronRight, ChevronsUpDown, ExternalLink, LogOut, SunMoon,} from 'lucide-vue-next'
+import {ChevronRight, ChevronsUpDown, ExternalLink, LogOut, SunMoon, Settings} from 'lucide-vue-next'
 import {useRoute} from 'vue-router';
 
 import {linksData, modulesData} from '@/data/navigation.data.ts';
@@ -253,14 +258,15 @@ import {Icon} from "@iconify/vue";
 import {Module} from "@/interface/navigation.interface.ts";
 import {useColorMode} from '@vueuse/core'
 import {useSecurityStore} from '@/store/auth.ts';
+import {useRouter} from 'vue-router'
 import {jwtDecode} from "jwt-decode";
 
 const route = useRoute();
+const router = useRouter()
 let mode = useColorMode()
 const authStore = useSecurityStore();
 const user = ref({
-  firstname: '',
-  lastname: '',
+  username: '',
   email: '',
 })
 

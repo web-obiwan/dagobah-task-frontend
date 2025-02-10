@@ -27,9 +27,9 @@ export function createAxiosResponseInterceptor(XiorInstance: XiorInstance): void
         async (error: XiorError) => {
             const originalConfig = error.config;
             if (error.response && (error.response.status === 401 || error.response.status === 500) && originalConfig && error.config) {
-                if (error.config.url?.includes('token/refresh_user_api')) {
+                if (error.config.url?.includes('token/refresh_token')) {
                     useSecurityStore().logout();
-                    window.location.assign('/');
+                    window.location.assign('/login');
                     throw error;
                 } else {
                     try {
