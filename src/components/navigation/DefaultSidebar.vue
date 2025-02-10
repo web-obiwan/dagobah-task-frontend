@@ -4,57 +4,10 @@
       <SidebarHeader class="bg-white dark:bg-neutral-950">
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger as-child>
-                <SidebarMenuButton
-                    class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                    size="lg"
-                >
-                  <div
-                      class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                    <Icon :icon="activeModule.icon" class="size-4"/>
-                  </div>
-                  <div class="grid flex-1 text-left text-sm leading-tight">
-                    <span class="truncate font-semibold">{{ activeModule.label }}</span>
-                    <span class="truncate text-xs">{{ activeModule.subLabel }}</span>
-                  </div>
-                  <ChevronsUpDown class="ml-auto"/>
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                  :side-offset="4"
-                  align="start"
-                  class="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-                  side="bottom"
-              >
-                <DropdownMenuLabel class="text-xs text-muted-foreground">
-                  Modules
-                </DropdownMenuLabel>
-                <DropdownMenuItem
-                    v-for="(module) in modulesData"
-                    :key="module.label"
-                    class="gap-2 p-2 cursor-pointer"
-                    @click="openModule(module)"
-                >
-                  <div class="flex size-6 items-center justify-center rounded-sm border">
-                    <Icon :icon="module.icon" class="size-4 shrink-0"/>
-                  </div>
-                  <div class="grid flex-1 text-left text-xs leading-tight">
-                    <span class="truncate font-semibold">{{ module.label }}</span>
-                    <span class="truncate text-[0.7rem] opacity-50">{{ module.subLabel }}</span>
-                  </div>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator/>
-                <DropdownMenuItem class="gap-2 p-2 cursor-pointer" @click="openDashboard">
-                  <div class="flex size-6 items-center justify-center rounded-md border bg-background">
-                    <ExternalLink class="size-4"/>
-                  </div>
-                  <div class="font-medium text-muted-foreground">
-                    Accéder au Gitlab
-                  </div>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div class="flex items-center space-x-2">
+              <img :src="logo" class="w-7" alt="logo"/>
+              <p class="font-black text-lg">DAGOBAH <span class="text-primary font-black text-lg">TASK</span></p>
+            </div>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
@@ -260,6 +213,8 @@ import {useColorMode} from '@vueuse/core'
 import {useSecurityStore} from '@/store/auth.ts';
 import {useRouter} from 'vue-router'
 import {jwtDecode} from "jwt-decode";
+
+import logo from '../../../public/logo.svg'
 
 const route = useRoute();
 const router = useRouter()
