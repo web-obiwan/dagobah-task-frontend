@@ -32,7 +32,13 @@
                 class="dark:bg-neutral-950 bg-white shadow-sm border rounded-md p-3 hover:bg-gray-50 cursor-pointer"
             >
               <div class="flex flex-col space-y-2">
-                <p class="text-[0.6rem] opacity-40 -mb-2">{{ element.reference }}</p>
+                <div class="flex items-center justify-between">
+                  <p class="text-[0.6rem] opacity-40 -mb-2">{{ element.reference }}</p>
+                  <component
+                      :is="issuesPriorityTransformer(element.priority.name).icon"
+                      :class="cn('w-4 h-4', issuesPriorityTransformer(element.priority.name).color)"
+                  />
+                </div>
                 <div class="flex items-center space-x-2">
                   <component
                     :is="issusStatusTransformer(element.status).icon"
@@ -72,6 +78,7 @@ import {cn} from '@/lib/utils'
 import {getLabelStyle} from "@/utils/transformer/label.transformer.utils";
 import {RouterLink} from 'vue-router';
 import {updateIssue} from "@/services/api/issus.service.api.ts";
+import {issuesPriorityTransformer} from "@/utils/transformer/priority.transformer.utils.ts";
 
 const props = defineProps<{
   data?: IssueInterface[]
