@@ -203,12 +203,11 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from '@/components/ui/sidebar'
-import {ChevronRight, ChevronsUpDown, ExternalLink, LogOut, SunMoon, Settings} from 'lucide-vue-next'
+import {ChevronRight, ChevronsUpDown, LogOut, SunMoon, Settings} from 'lucide-vue-next'
 import {useRoute} from 'vue-router';
 
-import {linksData, modulesData} from '@/data/navigation.data.ts';
+import {linksData} from '@/data/navigation.data.ts';
 import {Icon} from "@iconify/vue";
-import {Module} from "@/interface/navigation.interface.ts";
 import {useColorMode} from '@vueuse/core'
 import {useSecurityStore} from '@/store/auth.ts';
 import {useRouter} from 'vue-router'
@@ -225,8 +224,6 @@ const user = ref({
   email: '',
 })
 
-const activeModule = ref(modulesData[0])
-
 const breadcrumbs = computed(() => {
   return route.matched.map((r, index) => ({
     label: r.meta.breadcrumb || r.name,
@@ -242,15 +239,6 @@ const handleLogout = () => {
 const onDarkMode = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   mode.value === 'light' ? mode.value = 'dark' : mode.value = 'light'
-}
-
-const openModule = (module: Module) => {
-  window.open(module.url, '_blank');
-}
-
-const openDashboard = () => {
-  const dashboardUrl = import.meta.env.VITE_URL_DASHBOARD_CORTEX;
-  window.open(dashboardUrl, '_blank');
 }
 
 onMounted(() => {
