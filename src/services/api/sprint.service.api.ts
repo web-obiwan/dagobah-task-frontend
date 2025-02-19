@@ -1,8 +1,8 @@
 import type {SprintInterface} from "@/interface/sprint.interface.ts";
 import axios from "@/plugin/xior/api.default.ts";
 
-export const getSprintCollection = async (): Promise<SprintInterface[]> => {
-    const response = await axios.get('/sprints', {params: {pagination: false,'order[createdAt]': 'desc' }});
+export const getSprintCollection = async (params: object): Promise<SprintInterface[]> => {
+    const response = await axios.get('/sprints', {params: {pagination: false, 'order[createdAt]': 'desc', ...params}});
     return response.data.member as SprintInterface[];
 }
 

@@ -3,7 +3,7 @@ services:
     container_name: dagobah-task-frontend
     image: node:20-slim
     ports:
-      - 8080:8080
+      - 8089:8089
     environment:
       - NODE_ENV=dev
     volumes:

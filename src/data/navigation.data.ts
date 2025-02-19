@@ -1,4 +1,4 @@
-import {Module, Link} from '@/interface/navigation.interface.ts';
+import {Link, Module} from '@/interface/navigation.interface.ts';
 
 // Repositories favoris de l'utilisateur
 export const modulesData: Module[] = [
@@ -43,7 +43,8 @@ export const linksData: Link[] = [
         isActive: true,
         items: [],
     },
-    { title: 'Projects',
+    {
+        title: 'Projects',
         icon: 'lucide:layout-grid',
         to: {name: 'ProjectList'},
         isActive: true,
@@ -52,17 +53,9 @@ export const linksData: Link[] = [
     {
         title: 'Sprints',
         icon: 'lucide:square-kanban',
-        isActive: false,
-        items: [
-            {
-                title: 'Sprint',
-                to: {name: 'MilestonesList'},
-            },
-            {
-                title: 'Create sprint',
-                to: {name: 'MilestonesCreate'},
-            },
-        ],
+        to: {name: 'SprintsList'},
+        isActive: true,
+        items: [],
     },
 ]
 
