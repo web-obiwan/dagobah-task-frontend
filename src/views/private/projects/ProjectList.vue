@@ -23,10 +23,13 @@
       <Card v-for="project in filteredProjects" :key="project.id" class="hover:shadow-lg transition-shadow">
         <CardHeader>
           <div class="flex items-center space-x-2">
+            <CardTitle>{{ project.prefix }}</CardTitle>
+            <CardTitle> - </CardTitle>
             <CardTitle>{{ project.name }}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardDescription>{{ project.description }}</CardDescription>
+<!--        <CardContent>
           <div class="space-y-2">
             <div class="flex items-center text-sm text-muted-foreground">
               <Calendar class="h-4 w-4 mr-2" />
@@ -37,7 +40,7 @@
               {{ project.repositories.length }} repositories
             </div>
           </div>
-        </CardContent>
+        </CardContent>-->
         <CardFooter>
           <Button variant="outline" class="w-full" @click="router.push(`/project/${project.id}/edit`)">
             View Project
@@ -49,39 +52,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import {ref, computed, onMounted} from 'vue'
 import { useRouter } from 'vue-router'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import {
   Card,
-  CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Search, Calendar, GitFork } from 'lucide-vue-next'
+import { Search } from 'lucide-vue-next'
 import ProjectCreate from '@/components/project/ProjectCreate.vue'
-import type { Project } from '@/interface/project.interface'
+import type {Project, ProjectInterface} from '@/interface/project.interface'
+import {getProjectCollection} from "@/services/api/project.service.api.ts";
+import {defaultProject} from "@/data/default/project.data.default.ts";
 
 const router = useRouter()
 const searchQuery = ref('')
 
 // Mock data (replace with API call)
-const projects = ref<Project[]>([
-  {
-    id: 1,
-    name: 'Frontend App',
-    slug: '',
-    description: '',
-    repositories: [
-      { id: 1, name: 'frontend-app', url: 'https://github.com/org/frontend-app', description: 'Main frontend application' },
-    ],
-    createdAt: '2024-12-01T10:00:00Z',
-    updatedAt: '2024-12-01T10:00:00Z'
-  },
-  // Add more mock projects as needed
-])
+const projects = ref<ProjectInterface[]>([defaultProject])
 
 const filteredProjects = computed(() => {
   if (!searchQuery.value.trim()) return projects.value
@@ -102,4 +94,8 @@ function formatDate(date: string) {
     day: 'numeric'
   })
 }
+
+onMounted(async () => {
+  projects.value = await getProjectCollection({})
+})
 </script>

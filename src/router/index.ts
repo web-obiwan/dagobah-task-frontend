@@ -2,15 +2,19 @@ import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
 import {useSecurityStore} from '@/store/auth.ts';
 
 import Inbox from "@/views/private/inbox/Inbox.vue";
-import IssusCreate from "@/views/private/issus/IssusCreate.vue";
+
 import IssusEdit from "@/views/private/issus/IssusEdit.vue";
 import IssusList from "@/views/private/issus/IssusList.vue";
+
 import SprintsCreate from "@/views/private/sprints/SprintsCreate.vue";
 import SprintsEdit from "@/views/private/sprints/SprintsEdit.vue";
 import SprintsList from "@/views/private/sprints/SprintsList.vue";
+
 import ProjectEdit from "@/views/private/projects/ProjectEdit.vue";
 import ProjectList from "@/views/private/projects/ProjectList.vue";
+
 import Setting from "@/views/private/settings/Setting.vue";
+
 import Login from "@/views/public/login/Login.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -72,15 +76,6 @@ const routes: Array<RouteRecordRaw> = [
                 component: IssusList,
                 meta: {
                     breadcrumb: 'Issus list',
-                    requiresAuth: true
-                },
-            },
-            {
-                path: '/add',
-                name: 'IssusCreate',
-                component: IssusCreate,
-                meta: {
-                    breadcrumb: 'Create issus',
                     requiresAuth: true
                 },
             },

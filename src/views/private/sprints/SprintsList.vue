@@ -4,7 +4,7 @@
       <RouterLink :to="{name: 'SprintsCreate'}">
         <Button>
           <CirclePlus class="w-4 h-4 mr-2"/>
-          Ajouter un référent
+          Create sprint
         </Button>
       </RouterLink>
     </DefaultDataTable>

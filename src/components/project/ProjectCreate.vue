@@ -1,7 +1,9 @@
 <template>
   <Dialog>
     <DialogTrigger asChild>
-      <Button class="py-[1.17rem]" variant="outline">Create Project</Button>
+      <Button class="py-[1.17rem]">
+        <CirclePlus class="w-4 h-4 mr-2"/>
+        Create Project</Button>
     </DialogTrigger>
     <DialogContent class="sm:max-w-[600px]">
       <DialogHeader>
@@ -52,6 +54,7 @@ import {
 
 import RepositorySelect from './RepositorySelect.vue'
 import type { Repository, ProjectSettings } from '@/interface/project.interface'
+import {CirclePlus} from "lucide-vue-next";
 
 const { toast } = useToast()
 

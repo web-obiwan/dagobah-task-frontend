@@ -5,6 +5,14 @@ export const getIssueCollection = async (params: object): Promise<IssueInterface
     const response = await axios.get('/issues', {params: {pagination: false, ...params}});
     return response.data.member as IssueInterface[];
 }
+export const getIssuePaginationCollection = async (nbrPage: number): Promise<IssueInterface[]> => {
+    const response = await axios.get('/issues', {   params: {
+            page: nbrPage,
+            itemsPerPage: 30,
+            pagination: true,
+        }});
+    return response.data.member as IssueInterface[];
+}
 
 export const getIssue = async (issueId: number | string): Promise<IssueInterface> => {
     const response = await axios.get('/issues/' + issueId);

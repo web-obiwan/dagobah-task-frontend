@@ -3,8 +3,8 @@
     <Separator/>
     <div class="flex items-center gap-2 text-muted-foreground text-sm my-2 px-2">
       <span>{{ issus.reference }}</span>
-      <!-- <span>·</span>-->
-      <!-- <span>Created {{ formatDate(issus.createdAt) }}</span>-->
+      <span>·</span>
+      <span>{{ issus.repositories.map((item) => item.name).join(', ') }}</span>
     </div>
     <Separator/>
     <div class="flex justify-between pl-5 w-full">
@@ -97,8 +97,7 @@
               <Label>Story point</Label>
               <Input
                   type="number"
-                  :value="issus.storyPoint ?? ''"
-                  @update:modelValue="value => issus.storyPoint = value ? Number(value) : null"
+                  v-model="issus.storyPoint as number"
               />
             </div>
 
@@ -160,6 +159,8 @@ const issus = computed({
     emit('update:modelValue', value)
   }
 })
+
+console.log(issus.value.repositories.map((item) => item.name))
 
 const isEditingTitle = ref(false)
 const editableTitle = ref('')
