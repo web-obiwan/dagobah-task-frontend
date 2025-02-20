@@ -32,8 +32,8 @@
                 class="dark:bg-neutral-950 bg-white shadow-sm border rounded-md p-3 hover:bg-gray-50 cursor-pointer"
             >
               <div class="flex flex-col space-y-2">
-                <div class="flex items-center justify-between">
-                  <p class="text-[0.6rem] opacity-40 -mb-2">{{ element.reference }}</p>
+                <div class="flex items-start justify-between">
+                  <p class="text-[0.6rem] opacity-40 -mb-2">{{ element.reference }} - {{ element.project.name }} - {{ element.owner.username }}</p>
                   <component
                       :is="issuesPriorityTransformer(element.priority.name).icon"
                       :class="cn('w-4 h-4', issuesPriorityTransformer(element.priority.name).color)"
