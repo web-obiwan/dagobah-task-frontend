@@ -21,14 +21,14 @@ export const inboxColumns = (): ColumnDef<IssueInterface>[] => [
         },
     },
     {
-        accessorKey: 'description',
+        accessorKey: 'false',
         header: () => h('div', { class: 'text-left' }, 'Description'),
         cell: ({ row }) => {
             return h('div', { class: 'text-left text-muted-foreground truncate max-w-[300px]' }, row.getValue('description'))
         },
     },
     {
-        id: 'status',
+        id: 'false',
         enableHiding: false,
         header: () => h('div', { class: 'text-center' }, 'Statut'),
         cell: ({row}) => {
@@ -39,7 +39,7 @@ export const inboxColumns = (): ColumnDef<IssueInterface>[] => [
         }
     },
     {
-        accessorKey: 'priority',
+        accessorKey: 'false',
         header: () => h('div', { class: 'text-center' }, 'Priorité'),
         cell: ({row}) => {
             const issus = row.original;
@@ -49,7 +49,7 @@ export const inboxColumns = (): ColumnDef<IssueInterface>[] => [
         }
     },
     {
-        accessorKey: 'project',
+        accessorKey: 'false',
         header: () => h('div', { class: 'text-left' }, 'Projet'),
         cell: ({ row }) => {
             const issus = row.original;
@@ -57,7 +57,7 @@ export const inboxColumns = (): ColumnDef<IssueInterface>[] => [
         },
     },
     {
-        accessorKey: 'assignee',
+        accessorKey: 'false',
         header: () => h('div', { class: 'text-left' }, 'Assigné à'),
         cell: ({ row }) => {
             const data = row.original;

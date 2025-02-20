@@ -1,17 +1,20 @@
-import type {IssueInterface} from "@/interface/issus.interface.ts";
+import {IssueInterface, IssueResponseInterface} from "@/interface/issus.interface.ts";
 import axios from "@/plugin/xior/api.default.ts";
 
 export const getIssueCollection = async (params: object): Promise<IssueInterface[]> => {
     const response = await axios.get('/issues', {params: {pagination: false, ...params}});
     return response.data.member as IssueInterface[];
 }
-export const getIssuePaginationCollection = async (nbrPage: number): Promise<IssueInterface[]> => {
-    const response = await axios.get('/issues', {   params: {
+export const getIssuePaginationCollection = async (nbrPage: number): Promise<IssueResponseInterface> => {
+    const response = await axios.get('/issues', {
+        params: {
             page: nbrPage,
             itemsPerPage: 30,
             pagination: true,
-        }});
-    return response.data.member as IssueInterface[];
+            'order[createdAt]': 'desc'
+        }
+    });
+    return response.data as IssueResponseInterface;
 }
 
 export const getIssue = async (issueId: number | string): Promise<IssueInterface> => {

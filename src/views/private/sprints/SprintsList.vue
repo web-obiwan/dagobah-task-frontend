@@ -1,6 +1,6 @@
 <template>
   <div class="px-5">
-    <DefaultDataTable v-if="!isLoading" :columns="columns" :data="sprints as any" >
+    <DefaultDataTable v-if="!isLoading" :columns="columns" :dataResponse="{...responseDataDefault, member: sprints}" >
       <RouterLink :to="{name: 'SprintsCreate'}">
         <Button>
           <CirclePlus class="w-4 h-4 mr-2"/>
@@ -22,6 +22,7 @@ import DefaultDataTable from "@/components/table/DefaultDataTable.vue";
 import {defaultSprint} from "@/data/default/sprint.data.default.ts";
 import {CirclePlus} from "lucide-vue-next";
 import {Button} from "@/components/ui/button";
+import {responseDataDefault} from "@/data/default/response.data.default.ts";
 
 const sprints = ref<SprintInterface[]>([defaultSprint])
 const isLoading = ref(false)
