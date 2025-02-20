@@ -65,14 +65,13 @@ import {
 } from '@/components/ui/card'
 import { Search } from 'lucide-vue-next'
 import ProjectCreate from '@/components/project/ProjectCreate.vue'
-import type {Project, ProjectInterface} from '@/interface/project.interface'
+import type {ProjectInterface} from '@/interface/project.interface'
 import {getProjectCollection} from "@/services/api/project.service.api.ts";
 import {defaultProject} from "@/data/default/project.data.default.ts";
 
 const router = useRouter()
 const searchQuery = ref('')
 
-// Mock data (replace with API call)
 const projects = ref<ProjectInterface[]>([defaultProject])
 
 const filteredProjects = computed(() => {
@@ -83,17 +82,17 @@ const filteredProjects = computed(() => {
   )
 })
 
-function handleProjectCreate(newProject: Project) {
+function handleProjectCreate(newProject: ProjectInterface) {
   projects.value.push(newProject)
 }
 
-function formatDate(date: string) {
+/*function formatDate(date: string) {
   return new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
   })
-}
+}*/
 
 onMounted(async () => {
   projects.value = await getProjectCollection({})

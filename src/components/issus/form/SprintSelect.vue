@@ -97,7 +97,7 @@ const formatDate = (dateString: string) => {
 
 onMounted(async () => {
   try {
-    sprints.value = await getSprintCollection()
+    sprints.value = await getSprintCollection({})
   } catch (error) {
     console.error('Error fetching sprints:', error)
   } finally {

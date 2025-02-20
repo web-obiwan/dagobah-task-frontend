@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 w-full">
   <DefaultTitleNavHeader title="Create sprint"/>
-  <AutoForm
+<!--  <AutoForm
       class="w-full space-y-6"
       :schema="schema"
       :field-config="{
@@ -28,24 +28,24 @@
         {{ loading ? 'Creating...' : 'Create Sprint' }}
       </Button>
     </template>
-  </AutoForm>
+  </AutoForm>-->
   </div>
 </template>
 
 <script setup lang="ts">
-import { AutoForm } from '@/components/ui/auto-form'
-import { Button } from '@/components/ui/button'
-import { toast } from '@/components/ui/toast'
-import * as z from 'zod'
+/*import { AutoForm } from '@/components/ui/auto-form'
+import { Button } from '@/components/ui/button'*/
+/*import { toast } from '@/components/ui/toast'
+import * as z from 'zod'*/
 import DefaultTitleNavHeader from "@/components/header/DefaultTitleNavHeader.vue";
-import {createSprint} from "@/services/api/sprint.service.api.ts";
+/*import {createSprint} from "@/services/api/sprint.service.api.ts";
 
 import {useRouter} from "vue-router";
 import {catchUtils} from "@/utils/catch.utils.ts";
 
-const router = useRouter()
+const router = useRouter()*/
 
-const schema = z.object({
+/*const schema = z.object({
   name: z
       .string({
         required_error: 'Sprint name is required.',
@@ -67,9 +67,9 @@ const schema = z.object({
       .min(new Date(), {
         message: 'End date must be in the future.',
       }),
-})
+})*/
 
-async function onSubmit(values: z.infer<typeof schema>) {
+/*async function onSubmit(values: z.infer<typeof schema>) {
   if (values.endedAt < values.begunAt) {
     toast({
       title: 'Error',
@@ -85,5 +85,5 @@ async function onSubmit(values: z.infer<typeof schema>) {
   } catch (err) {
     catchUtils(err)
   }
-}
+}*/
 </script>

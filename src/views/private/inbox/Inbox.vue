@@ -13,7 +13,6 @@
         <Search class="size-6 text-muted-foreground"/>
       </span>
       </div>
-      <DefaultFilterBtn/>
       <AssigneeSelect :isLabel="false" v-model="assigneeFilter" label="" />
       <IssusCreate @create="handleIssueCreate"/>
     </div>
@@ -35,7 +34,6 @@ import type {KanbanBoard, IssueInterface} from '@/interface/issus.interface'
 
 import DefaultKanban from "@/components/kanban/DefaultKanban.vue";
 import IssusCreate from "@/components/issus/IssusCreate.vue";
-import DefaultFilterBtn from "@/components/filter/DefaultFilterBtn.vue";
 import AssigneeSelect from "@/components/issus/form/AssigneeSelect.vue";
 import {getIssueCollection} from "@/services/api/issus.service.api.ts";
 import DefaultLoading from "@/components/ui/loading/DefaultLoading.vue";
@@ -58,7 +56,7 @@ let originalKanbanData = <KanbanBoard>({...kanbanBoardDataDefault});
 const loadIssues = async () => {
   try {
     isLoading.value = true
-    const sprint = await getSprintCollection()
+    const sprint = await getSprintCollection({})
     const response = await getIssueCollection({
       sprint: sprint[0]['@id'],
       owner: assigneeFilter.value ? `api/users/${assigneeFilter.value.id}` : undefined

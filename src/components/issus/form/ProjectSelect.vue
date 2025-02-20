@@ -95,7 +95,7 @@ const handleSelect = (project: ProjectInterface) => {
 
 onMounted(async () => {
   try {
-    projects.value = await getProjectCollection()
+    projects.value = await getProjectCollection({})
   } catch (error) {
     console.error('Error fetching projects:', error)
     projects.value = [defaultProject]
