@@ -122,8 +122,6 @@ import type {ProjectInterface} from "@/interface/project.interface.ts";
 import RepositorySelect from "@/components/issus/form/RepositorySelect.vue";
 import type {RepositoryInterface} from "@/interface/repository.interface.ts";
 import {ScrollArea} from "@/components/ui/scroll-area";
-import AssigneeSelect from "@/components/issus/form/AssigneeSelect.vue";
-import type {UserInterface} from "@/interface/user.interface.ts";
 
 // Interfaces
 interface Task {
@@ -151,7 +149,6 @@ const useSprintData = ref<boolean>(false);
 const sprintCurrent = ref<SprintInterface>(defaultSprint);
 const project = ref<ProjectInterface>();
 const repositories = ref<RepositoryInterface[]>();
-const assign = ref<UserInterface[]>();
 
 // New task form
 const newTask = ref<Partial<Task>>({
