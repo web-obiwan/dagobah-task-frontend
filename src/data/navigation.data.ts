@@ -1,32 +1,4 @@
-import {Link, Module} from '@/interface/navigation.interface.ts';
-
-// Repositories favoris de l'utilisateur
-export const modulesData: Module[] = [
-    {
-        label: 'Frontend App',
-        subLabel: 'Application frontend principale',
-        icon: 'lucide:layout-template',
-        url: '/repository/1',
-        repoId: 1,
-        isFavorite: true
-    },
-    {
-        label: 'Backend API',
-        subLabel: 'API principale',
-        icon: 'lucide:server',
-        url: '/repository/2',
-        repoId: 2,
-        isFavorite: true
-    },
-    {
-        label: 'Shared Library',
-        subLabel: 'Composants et utilitaires partagés',
-        icon: 'lucide:library',
-        url: '/repository/3',
-        repoId: 3,
-        isFavorite: true
-    }
-]
+import {Link} from '@/interface/navigation.interface.ts';
 
 export const linksData: Link[] = [
     {
@@ -37,7 +9,7 @@ export const linksData: Link[] = [
         items: [],
     },
     {
-        title: 'Issus',
+        title: 'Issues',
         icon: 'lucide:focus',
         to: {name: 'IssusList'},
         isActive: true,
