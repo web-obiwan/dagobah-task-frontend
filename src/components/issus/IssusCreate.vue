@@ -154,6 +154,7 @@ const onSubmit = handleSubmit(async (values) => {
       "reporter": formData.value.reporter?.['@id'] ?? null,
       "sprint": formData.value.sprint?.['@id'] ?? null,
       "labels": formData.value.labels.map(item => item['@id']),
+      "description": values.description,
     })
 
     await router.push({name: 'IssusEdit', params: {id: response.id}})
@@ -168,15 +169,9 @@ const onSubmit = handleSubmit(async (values) => {
 })
 
 watch(formData.value, (newData) => {
-  if (
-      newData.repositories.length > 0 &&
+  isFormValid.value = !!(newData.repositories.length > 0 &&
       newData.project &&
       newData.priority &&
-      newData.status
-  ) {
-    isFormValid.value = true
-  } else {
-    isFormValid.value = false
-  }
+      newData.status);
 }, { deep: true })
 </script>

@@ -19,7 +19,7 @@
                 @click="toggleRepository(repo)"
               />
               <div class="flex flex-col">
-                <span>{{ repo.name }}</span>
+                <span>{{ repo.project.name }} / {{ repo.name }}</span>
                 <span class="text-xs text-muted-foreground">{{ repo.description }}</span>
               </div>
             </div>
@@ -41,16 +41,16 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command'
-import type { Repository } from '@/interface/project.interface'
 import { computed } from 'vue'
+import {RepositoryInterface} from "@/interface/repository.interface.ts";
 
 const props = defineProps<{
-  repositories: Repository[]
-  modelValue: Repository[]
+  repositories: RepositoryInterface[]
+  modelValue: RepositoryInterface[]
 }>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: Repository[]]
+  'update:modelValue': [value: RepositoryInterface[]]
 }>()
 
 const selectedRepositories = computed({
@@ -58,7 +58,7 @@ const selectedRepositories = computed({
   set: (value) => emit('update:modelValue', value)
 })
 
-function toggleRepository(repo: Repository) {
+function toggleRepository(repo: RepositoryInterface) {
   const currentValue = [...selectedRepositories.value]
   const index = currentValue.findIndex(r => r.id === repo.id)
   

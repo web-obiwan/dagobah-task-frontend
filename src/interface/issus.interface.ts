@@ -4,6 +4,7 @@ import type { ProjectInterface } from './project.interface.ts';
 import {RepositoryInterface} from "@/interface/repository.interface.ts";
 import {PriorityInterface} from "@/interface/priority.interface.ts";
 import {LabelInterface} from "@/interface/label.interface.ts";
+import {ResponseInterface} from "@/interface/response-api.interface.ts";
 
 export type IssuesStatus = 'BACKLOG' | 'PLANNED' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELED';
 
@@ -42,6 +43,10 @@ export interface IssueInterface {
   labels: LabelInterface[]
   deadline: string | null
   isArchived: boolean
+}
+
+export interface IssueResponseInterface extends ResponseInterface {
+  member : IssueInterface[]
 }
 
 export interface KanbanBoard {

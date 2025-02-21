@@ -7,28 +7,28 @@ type Violation = { message: string };
 
 export const catchUtils = (e: unknown): void => {
     if (e instanceof XiorError && e.response?.status === 422) {
-         
+        
         const description = e.response?.data?.violations
-             
+            
             ? (e.response.data.violations as Violation[])
                 .map((item) => item.message)
                 .join('\n')
-            : 'Données invalides, mais aucune violation spécifique fournie.';
+            : 'Invalid data, but no specific violations provided.';
         
         toast({
-            title: 'Erreur de validation des données !',
+            title: 'Data validation error!',
             description: description,
             variant: 'destructive',
         });
     } else {
-        const message = e instanceof Error ? e.message : 'Erreur inconnue.';
+        const message = e instanceof Error ? e.message : 'Unknown error.';
         toast({
-            title: 'Un problème est survenu !',
+            title: 'An error occurred!',
             description: message,
             variant: 'destructive',
         });
     }
     
-    // Logging de l'erreur
-    console.error('Erreur capturée :', e);
+    // Error logging
+    console.error('Caught error:', e);
 };

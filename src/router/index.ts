@@ -2,15 +2,19 @@ import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
 import {useSecurityStore} from '@/store/auth.ts';
 
 import Inbox from "@/views/private/inbox/Inbox.vue";
-import IssusCreate from "@/views/private/issus/IssusCreate.vue";
+
 import IssusEdit from "@/views/private/issus/IssusEdit.vue";
 import IssusList from "@/views/private/issus/IssusList.vue";
-import MilestonesCreate from "@/views/private/milestones/MilestonesCreate.vue";
-import MilestonesEdit from "@/views/private/milestones/MilestonesEdit.vue";
-import MilestonesList from "@/views/private/milestones/MilestonesList.vue";
+
+import SprintsCreate from "@/views/private/sprints/SprintsCreate.vue";
+import SprintsEdit from "@/views/private/sprints/SprintsEdit.vue";
+import SprintsList from "@/views/private/sprints/SprintsList.vue";
+
 import ProjectEdit from "@/views/private/projects/ProjectEdit.vue";
 import ProjectList from "@/views/private/projects/ProjectList.vue";
+
 import Setting from "@/views/private/settings/Setting.vue";
+
 import Login from "@/views/public/login/Login.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -76,15 +80,6 @@ const routes: Array<RouteRecordRaw> = [
                 },
             },
             {
-                path: '/add',
-                name: 'IssusCreate',
-                component: IssusCreate,
-                meta: {
-                    breadcrumb: 'Create issus',
-                    requiresAuth: true
-                },
-            },
-            {
                 path: '/:id/edit',
                 name: 'IssusEdit',
                 component: IssusEdit,
@@ -105,8 +100,8 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             {
                 path: '',
-                name: 'MilestonesList',
-                component: MilestonesList,
+                name: 'SprintsList',
+                component: SprintsList,
                 meta: {
                     breadcrumb: 'Sprint list',
                     requiresAuth: true
@@ -114,8 +109,8 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: '/add',
-                name: 'MilestonesCreate',
-                component: MilestonesCreate,
+                name: 'SprintsCreate',
+                component: SprintsCreate,
                 meta: {
                     breadcrumb: 'Create sprint',
                     requiresAuth: true
@@ -123,8 +118,8 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: '/:id/edit',
-                name: 'MilestonesEdit',
-                component: MilestonesEdit,
+                name: 'SprintsEdit',
+                component: SprintsEdit,
                 meta: {
                     breadcrumb: 'Edit sprint',
                     requiresAuth: true

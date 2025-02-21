@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host --port 8080",
+    "dev": "vite --host --port 8089",
     "build": "vue-tsc -b && vite build",
     "build-staging": "vue-tsc -b && vite build --mode=staging",
     "build-production": "vue-tsc -b && vite build --mode=production",

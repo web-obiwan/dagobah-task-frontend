@@ -1,8 +1,8 @@
 import type {ProjectInterface} from "@/interface/project.interface.ts";
 import axios from "@/plugin/xior/api.default.ts";
 
-export const getProjectCollection = async (): Promise<ProjectInterface[]> => {
-    const response = await axios.get('/projects', {params: {pagination: false,}});
+export const getProjectCollection = async (params: object): Promise<ProjectInterface[]> => {
+    const response = await axios.get('/projects', {params: {pagination: false, ...params}});
     return response.data.member as ProjectInterface[];
 }
 
