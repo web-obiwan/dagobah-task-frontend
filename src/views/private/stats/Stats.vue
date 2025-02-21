@@ -1,6 +1,9 @@
 <template>
   <div v-if="issues[0].id !== 0" class="p-6">
-    <h1 class="text-2xl font-bold mb-6">Statistiques du Sprint : {{sprint.name}}</h1>
+    <div class="flex justify-between items-start w-full mb-5">
+      <h1 class="text-2xl font-bold mb-6">Statistiques du Sprint : {{sprintCurrent.name}}</h1>
+      <SprintSelect v-model="sprintCurrent" />
+    </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
       <div class="bg-muted rounded-lg shadow p-4">
@@ -20,6 +23,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div class="bg-muted rounded-lg shadow p-6">
         <h2 class="text-lg font-semibold mb-4">Répartition des tags (pondérée par story points)</h2>
+         <div class="h-full flex items-center justify-center">
           <DonutChart
               :category="'total'"
               :colors="tagColors"
@@ -27,6 +31,7 @@
               :value-formatter="valueFormatter"
               index="name"
           />
+         </div>
       </div>
 
       <div class="bg-muted rounded-lg shadow p-6">
@@ -46,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted, ref, computed} from "vue";
+import {onMounted, ref, computed, watch} from "vue";
 
 import {DonutChart} from '@/components/ui/chart-donut';
 import {BarChart} from '@/components/ui/chart-bar';
@@ -60,10 +65,12 @@ import DefaultLoading from "@/components/ui/loading/DefaultLoading.vue";
 import {issuesDataDefault} from "@/data/default/issues.data.default.ts";
 import {SprintInterface} from "@/interface/sprint.interface.ts";
 import {defaultSprint} from "@/data/default/sprint.data.default.ts";
+import SprintSelect from "@/components/issus/form/SprintSelect.vue";
 
 const isLoading = ref<boolean>(false)
 const issues = ref<IssueInterface[]>([issuesDataDefault])
-const sprint = ref<SprintInterface>(defaultSprint)
+const sprint = ref<SprintInterface[]>([defaultSprint])
+const sprintCurrent = ref<SprintInterface>(defaultSprint)
 const dataSumVal = ref<{
   totalStoryPoints: number,
   highPriorityCount: number
@@ -77,11 +84,10 @@ const columns = inboxColumns()
 const loadIssues = async () => {
   try {
     isLoading.value = true
-    const sprints = await getSprintCollection({})
     issues.value = await getIssueCollection({
-      sprint: sprints[0]['@id'],
+      sprint: sprintCurrent.value['@id'],
     })
-    sprint.value = sprints[0]
+
 
     dataSumVal.value.totalStoryPoints = issues.value.reduce((sum, issue) => sum + (issue.storyPoint || 1), 0)
     dataSumVal.value.highPriorityCount = issues.value.filter(issue => issue.priority.name === "Critical").length
@@ -129,6 +135,13 @@ const tagColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec48
 const valueFormatter = (value: number) => `${value} pts`;
 
 onMounted(async () => {
+  const sprints = await getSprintCollection({})
+  sprint.value = sprints
+  sprintCurrent.value = sprints[0]
+  await loadIssues()
+})
+
+watch(sprintCurrent, async () => {
   await loadIssues()
 })
 </script>
