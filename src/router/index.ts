@@ -13,6 +13,8 @@ import SprintsList from "@/views/private/sprints/SprintsList.vue";
 import ProjectEdit from "@/views/private/projects/ProjectEdit.vue";
 import ProjectList from "@/views/private/projects/ProjectList.vue";
 
+import Stats from "@/views/private/stats/Stats.vue";
+
 import Setting from "@/views/private/settings/Setting.vue";
 
 import Login from "@/views/public/login/Login.vue";
@@ -153,6 +155,25 @@ const routes: Array<RouteRecordRaw> = [
                     requiresAuth: true
                 },
             },
+        ]
+    },
+    {
+        path: '/stats',
+        component: () => import('@/components/layout/DefaultLayout.vue'),
+        meta: {
+            breadcrumb: 'Statistics',
+            requiresAuth: true
+        },
+        children: [
+            {
+                path: '',
+                name: 'Stats',
+                component: Stats,
+                meta: {
+                    breadcrumb: 'Statistics',
+                    requiresAuth: true
+                },
+            }
         ]
     }
 ];

@@ -97,7 +97,6 @@ import {
   getPaginationRowModel,
   useVueTable
 } from '@tanstack/vue-table'
-import {ResponseInterface} from "@/interface/response-api.interface";
 import {Check, Copy} from 'lucide-vue-next';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from '@/components/ui/table'
 import {Button} from '@/components/ui/button'
@@ -107,15 +106,11 @@ import {toast} from "@/components/ui/toast";
 import {Input} from "@/components/ui/input";
 import {useRouter} from "vue-router";
 
-export interface Response extends ResponseInterface {
-  member: any[];
-}
-
 const router = useRouter();
 
 const props = defineProps<{
   columns: ColumnDef<TData, TValue>[];
-  dataResponse: Response;
+  dataResponse: any;
   nbrPage?: number;
 }>();
 

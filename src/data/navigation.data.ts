@@ -29,6 +29,13 @@ export const linksData: Link[] = [
         isActive: true,
         items: [],
     },
+    {
+        title: 'Statistics',
+        icon: 'lucide:chart-no-axes-combined',
+        to: {name: 'Stats'},
+        isActive: true,
+        items: [],
+    },
 ]
 
 // Exemple of navigation data for sidebar

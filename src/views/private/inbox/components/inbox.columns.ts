@@ -29,6 +29,14 @@ export const inboxColumns = (): ColumnDef<IssueInterface>[] => [
         },
     },
     {
+        accessorKey: 'false',
+        header: () => h('div', {class: 'text-left'}, 'Story point'),
+        cell: ({row}) => {
+            const issus = row.original;
+            return h('div', {class: 'text-left font-medium'}, issus.storyPoint ?? '')
+        },
+    },
+    {
         id: 'false',
         enableHiding: false,
         header: () => h('div', {class: 'text-center'}, 'Statut'),
