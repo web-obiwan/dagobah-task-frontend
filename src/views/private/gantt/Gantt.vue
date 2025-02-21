@@ -2,36 +2,53 @@
   <div class="p-6 max-w-[87vw]">
     <div class="flex justify-between items-start w-full mb-5">
       <h1 class="text-2xl font-bold mb-6">Interactive Gantt Chart</h1>
-      <SprintSelect v-if="useSprintData" v-model="sprintCurrent"/>
-    </div>
+      <div class="flex items-center gap-4">
+        <SprintSelect v-if="useSprintData" v-model="sprintCurrent"/>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>Add New Task</Button>
+          </DialogTrigger>
+          <DialogContent class="sm:max-w-[600px]">
+            <DialogHeader>
+              <DialogTitle>Add New Task</DialogTitle>
+              <DialogDescription>
+                Create a new task for your project timeline.
+              </DialogDescription>
+            </DialogHeader>
 
-    <!-- Task Addition Form -->
-    <Card class="mb-6">
-      <CardHeader>
-        <CardTitle>Add New Task</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form class="grid grid-cols-1 md:grid-cols-3 gap-4" @submit.prevent="addNewTask">
-          <div class="space-y-2">
-            <Label for="task-name">Task Name</Label>
-            <Input id="task-name" v-model="newTask.name" required/>
-          </div>
-          <div class="space-y-2">
-            <Label for="start-date">Start Date</Label>
-            <Input id="start-date" v-model="newTask.start" required type="date"/>
-          </div>
-          <div class="space-y-2">
-            <Label for="duration">Duration (days)</Label>
-            <Input id="duration" v-model.number="newTask.duration" min="1" required type="number"/>
-          </div>
-          <ProjectSelect v-model="project" />
-          <RepositorySelect v-model="project" />
-          <div class="md:col-span-3">
-            <Button type="submit">Add Task</Button>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
+            <form class="grid grid-cols-1 md:grid-cols-2 gap-4 py-4" @submit.prevent="addNewTask">
+              <div class="space-y-2 md:col-span-2">
+                <Label for="task-name">Task Name</Label>
+                <Input id="task-name" v-model="newTask.name" required/>
+              </div>
+              <div class="space-y-2">
+                <Label for="start-date">Start Date</Label>
+                <Input id="start-date" v-model="newTask.start" required type="date"/>
+              </div>
+              <div class="space-y-2">
+                <Label for="duration">Duration (days)</Label>
+                <Input id="duration" v-model.number="newTask.duration" min="1" required type="number"/>
+              </div>
+              <div class="space-y-2">
+                <ProjectSelect v-model="project" />
+              </div>
+              <div class="space-y-2">
+                <RepositorySelect v-model="repositories" />
+              </div>
+
+              <DialogFooter class="md:col-span-2">
+                <DialogClose asChild>
+                  <Button type="button" variant="outline">Cancel</Button>
+                </DialogClose>
+                <DialogClose asChild>
+                  <Button type="submit">Add Task</Button>
+                </DialogClose>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </div>
+    </div>
 
     <!-- Gantt Chart Container -->
     <Card class="mb-8">
@@ -91,10 +108,22 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import ProjectSelect from "@/components/issus/form/ProjectSelect.vue";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose
+} from "@/components/ui/dialog";
 import type {ProjectInterface} from "@/interface/project.interface.ts";
 import RepositorySelect from "@/components/issus/form/RepositorySelect.vue";
 import type {RepositoryInterface} from "@/interface/repository.interface.ts";
 import {ScrollArea} from "@/components/ui/scroll-area";
+import AssigneeSelect from "@/components/issus/form/AssigneeSelect.vue";
+import type {UserInterface} from "@/interface/user.interface.ts";
 
 // Interfaces
 interface Task {
@@ -120,8 +149,9 @@ const ganttChart = ref<any>(null);
 const tasks = ref<Task[]>([]);
 const useSprintData = ref<boolean>(false);
 const sprintCurrent = ref<SprintInterface>(defaultSprint);
-const project = ref<ProjectInterface>()
-const repositories = ref<RepositoryInterface[]>()
+const project = ref<ProjectInterface>();
+const repositories = ref<RepositoryInterface[]>();
+const assign = ref<UserInterface[]>();
 
 // New task form
 const newTask = ref<Partial<Task>>({
