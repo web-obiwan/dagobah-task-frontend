@@ -14,6 +14,7 @@
       </span>
       </div>
       <AssigneeSelect :isLabel="false" v-model="assigneeFilter" label="" />
+      <SprintSelect v-model="sprintCurrent" :isLabel="true" />
       <IssusCreate @create="handleIssueCreate"/>
     </div>
     <DefaultKanban
@@ -39,10 +40,14 @@ import {getIssueCollection} from "@/services/api/issus.service.api.ts";
 import DefaultLoading from "@/components/ui/loading/DefaultLoading.vue";
 import {kanbanBoardDataDefault} from "@/data/default/issues.data.default.ts";
 import {getSprintCollection} from "@/services/api/sprint.service.api.ts";
+import SprintSelect from "@/components/issus/form/SprintSelect.vue";
+import {SprintInterface} from "@/interface/sprint.interface.ts";
+import {defaultSprint} from "@/data/default/sprint.data.default.ts";
 
 const searchQuery = ref<string>('');
 const assigneeFilter = ref(JSON.parse(localStorage.getItem("userT") as string));
 const isLoading = ref<boolean>(false)
+const sprintCurrent = ref<SprintInterface>(defaultSprint)
 const issues = ref<KanbanBoard>({
   backlog: [],
   planned: [],
@@ -56,9 +61,9 @@ let originalKanbanData = <KanbanBoard>({...kanbanBoardDataDefault});
 const loadIssues = async () => {
   try {
     isLoading.value = true
-    const sprint = await getSprintCollection({})
+
     const response = await getIssueCollection({
-      sprint: sprint[0]['@id'],
+      sprint: sprintCurrent.value['@id'],
       owner: assigneeFilter.value ? `api/users/${assigneeFilter.value.id}` : undefined
     })
 
@@ -141,6 +146,12 @@ watch(assigneeFilter, async () => {
 });
 
 onMounted(async () => {
+  const sprint = await getSprintCollection({})
+  sprintCurrent.value = sprint[0]
+  await loadIssues()
+})
+
+watch(sprintCurrent, async () => {
   await loadIssues()
 })
 </script>

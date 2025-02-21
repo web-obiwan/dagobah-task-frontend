@@ -1,29 +1,29 @@
 <template>
   <div v-if="issues[0].id !== 0" class="p-6">
     <div class="flex justify-between items-start w-full mb-5">
-      <h1 class="text-2xl font-bold mb-6">Statistiques du Sprint : {{sprintCurrent.name}}</h1>
+      <h1 class="text-2xl font-bold mb-6">Sprint Statistics: {{sprintCurrent.name}}</h1>
       <SprintSelect v-model="sprintCurrent" />
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
       <div class="bg-muted rounded-lg shadow p-4">
-        <h3 class="text-sm">Issues totales</h3>
+        <h3 class="text-sm">Total Issues</h3>
         <p class="text-2xl font-bold">{{ issues.length }}</p>
       </div>
       <div class="bg-muted rounded-lg shadow p-4">
-        <h3 class="text-sm">Story points totaux</h3>
+        <h3 class="text-sm">Total Story Points</h3>
         <p class="text-2xl font-bold">{{ dataSumVal.totalStoryPoints }}</p>
       </div>
       <div class="bg-muted rounded-lg shadow p-4">
-        <h3 class="text-sm">Issues haute priorité</h3>
+        <h3 class="text-sm">High Priority Issues</h3>
         <p class="text-2xl font-bold">{{ dataSumVal.highPriorityCount }}</p>
       </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div class="bg-muted rounded-lg shadow p-6">
-        <h2 class="text-lg font-semibold mb-4">Répartition des tags (pondérée par story points)</h2>
-         <div class="h-full flex items-center justify-center">
+        <h2 class="text-lg font-semibold mb-4">Tags Distribution (weighted by story points)</h2>
+        <div class="h-full flex items-center justify-center">
           <DonutChart
               :category="'total'"
               :colors="tagColors"
@@ -31,18 +31,18 @@
               :value-formatter="valueFormatter"
               index="name"
           />
-         </div>
+        </div>
       </div>
 
       <div class="bg-muted rounded-lg shadow p-6">
-        <h2 class="text-lg font-semibold mb-4">Répartition des priorités (pondérée par story points)</h2>
-          <BarChart
-              :categories="['total']"
-              :colors="['#f59e0b']"
-              :data="priorityData"
-              :value-formatter="valueFormatter"
-              index="name"
-          />
+        <h2 class="text-lg font-semibold mb-4">Priority Distribution (weighted by story points)</h2>
+        <BarChart
+            :categories="['total']"
+            :colors="['#f59e0b']"
+            :data="priorityData"
+            :value-formatter="valueFormatter"
+            index="name"
+        />
       </div>
     </div>
     <IssusDataTable v-if="issues" :columns="columns" :dataResponse="{...responseDataDefault, member: issues}"/>
@@ -106,11 +106,11 @@ const tagsData = computed(() => {
 
     if (issue.labels && issue.labels.length > 0) {
       issue.labels.forEach(label => {
-        const labelName = label.name || 'Sans étiquette';
+        const labelName = label.name || 'No label';
         weightedData.set(labelName, (weightedData.get(labelName) || 0) + storyPoints);
       });
     } else {
-      weightedData.set('Sans étiquette', (weightedData.get('Sans étiquette') || 0) + storyPoints);
+      weightedData.set('No label', (weightedData.get('No label') || 0) + storyPoints);
     }
   });
 

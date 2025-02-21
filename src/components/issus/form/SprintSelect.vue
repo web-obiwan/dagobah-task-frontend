@@ -1,6 +1,6 @@
 <template>
   <div class="grid gap-2">
-    <Label for="sprint">Sprint</Label>
+    <Label for="sprint" v-if="!isLabel" >Sprint</Label>
     <Popover v-model:open="isOpen">
       <PopoverTrigger as-child>
         <Button
@@ -72,6 +72,7 @@ import { getSprintCollection } from '@/services/api/sprint.service.api'
 
 defineProps<{
   modelValue: SprintInterface | null
+  isLabel?: boolean
 }>()
 
 defineEmits<{

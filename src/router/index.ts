@@ -15,6 +15,8 @@ import ProjectList from "@/views/private/projects/ProjectList.vue";
 
 import Stats from "@/views/private/stats/Stats.vue";
 
+import Gantt from "@/views/private/gantt/Gantt.vue";
+
 import Setting from "@/views/private/settings/Setting.vue";
 
 import Login from "@/views/public/login/Login.vue";
@@ -171,6 +173,25 @@ const routes: Array<RouteRecordRaw> = [
                 component: Stats,
                 meta: {
                     breadcrumb: 'Statistics',
+                    requiresAuth: true
+                },
+            }
+        ]
+    },
+    {
+        path: '/gantt',
+        component: () => import('@/components/layout/DefaultLayout.vue'),
+        meta: {
+            breadcrumb: 'Gantt',
+            requiresAuth: true
+        },
+        children: [
+            {
+                path: '',
+                name: 'Gantt',
+                component: Gantt,
+                meta: {
+                    breadcrumb: 'Gantt',
                     requiresAuth: true
                 },
             }

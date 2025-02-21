@@ -169,7 +169,7 @@ const onSubmit = handleSubmit(async (values) => {
 })
 
 watch(formData.value, (newData) => {
-  isFormValid.value = !!(newData.repositories.length > 0 &&
+  isFormValid.value = !!(
       newData.project &&
       newData.priority &&
       newData.status);

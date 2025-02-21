@@ -36,6 +36,13 @@ export const linksData: Link[] = [
         isActive: true,
         items: [],
     },
+    {
+        title: 'Gantt',
+        icon: 'lucide:chart-no-axes-gantt',
+        to: {name: 'Gantt'},
+        isActive: true,
+        items: [],
+    },
 ]
 
 // Exemple of navigation data for sidebar
