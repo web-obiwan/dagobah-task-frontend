@@ -33,7 +33,7 @@
             >
               <div class="flex flex-col space-y-2">
                 <div class="flex items-start justify-between">
-                  <p class="text-[0.6rem] opacity-40 -mb-2">{{ element.reference }} - {{ element.project.name }} - {{ element.owner.username }}</p>
+                  <p class="text-[0.6rem] opacity-40 -mb-2">{{ element.reference }} - {{ element.project.name }} - {{ element.owner?.username }}</p>
                   <component
                       :is="issuesPriorityTransformer(element.priority.name).icon"
                       :class="cn('w-4 h-4', issuesPriorityTransformer(element.priority.name).color)"
