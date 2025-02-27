@@ -20,6 +20,7 @@
     "@vueuse/core": "^11.3.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "frappe-gantt": "^1.0.3",
     "globals": "^15.11.0",
     "jwt-decode": "^4.0.0",
     "lucide-vue-next": "^0.454.0",

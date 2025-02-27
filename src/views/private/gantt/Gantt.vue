@@ -122,6 +122,7 @@ import type {ProjectInterface} from "@/interface/project.interface.ts";
 import RepositorySelect from "@/components/issus/form/RepositorySelect.vue";
 import type {RepositoryInterface} from "@/interface/repository.interface.ts";
 import {ScrollArea} from "@/components/ui/scroll-area";
+import {defaultProject} from "@/data/default/project.data.default.ts";
 
 // Interfaces
 interface Task {
@@ -147,7 +148,7 @@ const ganttChart = ref<any>(null);
 const tasks = ref<Task[]>([]);
 const useSprintData = ref<boolean>(false);
 const sprintCurrent = ref<SprintInterface>(defaultSprint);
-const project = ref<ProjectInterface>();
+const project = ref<ProjectInterface>(defaultProject);
 const repositories = ref<RepositoryInterface[]>();
 
 // New task form
