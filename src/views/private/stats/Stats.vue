@@ -15,7 +15,7 @@
         <p class="text-2xl font-bold">{{ dataSumVal.totalStoryPoints }}</p>
       </div>
       <div class="bg-muted rounded-lg shadow p-4">
-        <h3 class="text-sm">High Priority Issues</h3>
+        <h3 class="text-sm">Critical Priority Issues</h3>
         <p class="text-2xl font-bold">{{ dataSumVal.highPriorityCount }}</p>
       </div>
     </div>
