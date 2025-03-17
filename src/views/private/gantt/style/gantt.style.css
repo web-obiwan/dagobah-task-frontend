@@ -1,0 +1,119 @@
+/* Gantt container dimensions */
+.gantt-chart-container {
+    height: 400px;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* Progress bar styling */
+.gantt .bar-progress {
+    fill: #3b82f6;
+}
+
+/* Task bar styling */
+.gantt .bar {
+    fill: #93c5fd;
+    stroke: #60a5fa;
+}
+
+/* Task label styling */
+.gantt .bar-label {
+    fill: #1e3a8a;
+    font-weight: 500;
+}
+
+/* Grid header styling */
+.gantt .grid-header {
+    fill: #f1f5f9;
+    stroke: #e2e8f0;
+}
+
+/* Grid row styling */
+.gantt .grid-row {
+    fill: #ffffff;
+}
+
+/* Row line styling */
+.gantt .row-line {
+    stroke: #e2e8f0;
+}
+
+/* Tick mark styling */
+.gantt .tick {
+    stroke: #cbd5e1;
+}
+
+/* Today highlight styling */
+.gantt .today-highlight {
+    fill: #fef3c7;
+    opacity: 0.5;
+}
+
+/* Custom styling for parent tasks */
+.gantt .bar.parent-task {
+    fill: #7c3aed;
+    stroke: #6d28d9;
+}
+
+.gantt .bar-progress.parent-task {
+    fill: #5b21b6;
+}
+
+/* Custom styling for subtasks */
+.gantt .bar.subtask {
+    fill: #a5b4fc;
+    stroke: #818cf8;
+}
+
+.gantt .bar-progress.subtask {
+    fill: #4f46e5;
+}
+
+/* Indentation for subtask names */
+.gantt .bar-label.subtask {
+    font-size: 12px;
+    fill: #4b5563;
+}
+
+/* Ensure SVG stays within bounds */
+.gantt svg {
+    max-width: 100%;
+}
+
+/* Loading indicator */
+.gantt-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+.gantt-loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #3b82f6;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: gantt-spin 1s linear infinite;
+}
+
+@keyframes gantt-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .gantt .bar-label {
+        font-size: 10px;
+    }
+
+    .gantt-chart-container {
+        height: 300px;
+    }
+}
