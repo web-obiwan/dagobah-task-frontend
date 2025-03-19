@@ -4,6 +4,14 @@
       <h1 class="text-2xl font-bold mb-6">Interactive Gantt Chart</h1>
       <div class="flex items-center gap-4">
         <SprintSelect v-if="useSprintData" v-model="sprintCurrent"/>
+        <div class="flex items-center gap-2 mr-4">
+          <Button
+              variant="default"
+              @click="toggleDataSource"
+          >
+          Using API Data
+          </Button>
+        </div>
         <GanttTaskDialog
             :project="project"
             :repositories="repositories"
@@ -26,35 +34,39 @@
 
     <!-- Tasks Table -->
     <GanttTaskTable
-        :tasks="tasks"
         :formatDate="formatDate"
+        :tasks="tasksData"
         @remove-task="removeTask"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
-import { SprintInterface } from "@/interface/sprint.interface.ts";
-import { defaultSprint } from "@/data/default/sprint.data.default.ts";
+import {nextTick, onBeforeUnmount, onMounted, ref} from "vue";
+import {SprintInterface} from "@/interface/sprint.interface.ts";
+import {defaultSprint} from "@/data/default/sprint.data.default.ts";
 import SprintSelect from "@/components/issus/form/SprintSelect.vue";
 
 // Import shadcn components
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import type { ProjectInterface } from "@/interface/project.interface.ts";
-import type { RepositoryInterface } from "@/interface/repository.interface.ts";
-import { defaultProject } from "@/data/default/project.data.default.ts";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {ScrollArea} from "@/components/ui/scroll-area";
+import {Button} from "@/components/ui/button";
+import type {ProjectInterface} from "@/interface/project.interface.ts";
+import type {RepositoryInterface} from "@/interface/repository.interface.ts";
+import {defaultProject} from "@/data/default/project.data.default.ts";
 
 // Import custom components
-import GanttTaskDialog from "@/components/gantt/GanttTaskDialog.vue";
-import GanttTaskTable from "@/components/gantt/GanttTaskTable.vue";
+import GanttTaskDialog from "@/views/private/gantt/components/GanttTaskDialog.vue";
+import GanttTaskTable from "@/views/private/gantt/components/GanttTaskTable.vue";
 
 // Import types and utilities
-import { Task } from "@/types/gantt.types";
-import { calculateEndDate, formatDate } from "@/utils/date-utils";
-import { loadFrappeGantt } from "@/utils/gantt-loader";
-import { generateTaskId } from "@/utils/id-generator";
+import {GanttInterface, Task} from "@/interface/gantt.interface.ts";
+import {calculateEndDate, formatDate} from "@/utils/date.utils.ts";
+import {loadFrappeGantt} from "@/views/private/gantt/logic/loader.gantt.logic.ts";
+import {generateTaskId} from "@/views/private/gantt/logic/id-generator.gantt.logic.ts";
+import {getGanttCollection} from "@/services/api/gantt.service.api.ts";
+import {ganttDataDefault} from "@/data/default/gantt.data.default.ts";
+import {catchUtils} from "@/utils/catch.utils.ts";
 
 // Types for window.Gantt
 declare global {
@@ -67,10 +79,19 @@ declare global {
 const ganttContainer = ref<HTMLElement | null>(null);
 const ganttChart = ref<any>(null);
 const tasks = ref<Task[]>([]);
+const tasksData = ref<GanttInterface[]>([ganttDataDefault]);
+const apiTasks = ref<Task[]>([]);
 const useSprintData = ref<boolean>(false);
 const sprintCurrent = ref<SprintInterface>(defaultSprint);
 const project = ref<ProjectInterface>(defaultProject);
 const repositories = ref<RepositoryInterface[]>();
+
+// Toggle between test data and API data
+const toggleDataSource = () => {
+    // Use API data
+    tasks.value = apiTasks.value;
+    console.log('Switched to API data:', tasks.value);
+};
 
 // Task management
 const addNewTask = (newTaskData: Partial<Task>) => {
@@ -144,14 +165,24 @@ const loadExampleTasks = () => {
   ];
 };
 
+const getGanttData = async () => {
+  try {
+    tasksData.value = await getGanttCollection({});
+  } catch (error) {
+   // catchUtils(error);
+    console.error('error', error)
+  }
+}
+
 // Initialize Gantt chart
-const initGantt = () => {
-  if (!ganttContainer.value || tasks.value.length === 0 || !window.Gantt) return;
+const initGantt = async() => {
+  if (!ganttContainer.value || tasksData.value.length === 0 || !window.Gantt) return;
 
   // Calculate end dates for each task for the gantt library
-  const ganttTasks = tasks.value.map(task => ({
+  const ganttTasks = tasksData.value.map(task => ({
     ...task,
-    end: task.end || calculateEndDate(task.start, task.duration)
+    dependencies: [task.parent ? task.parent.id : null],
+    end: calculateEndDate(task.begunAt, task.duration)
   }));
 
   ganttChart.value = new window.Gantt(ganttContainer.value, ganttTasks, {
@@ -166,24 +197,24 @@ const initGantt = () => {
     view_mode: 'Day',
     date_format: 'YYYY-MM-DD',
     language: 'en',
-    on_click: (task: Task) => {
+    on_click: (task: GanttInterface) => {
       alert(`Task: ${task.name}\nDuration: ${task.duration} days`);
     },
-    on_date_change: (task: Task, start: Date, end: Date) => {
+    on_date_change: (task: GanttInterface, start: Date, end: Date) => {
       // Update the task in our data
-      const taskIndex = tasks.value.findIndex(t => t.id === task.id);
+      const taskIndex = tasksData.value.findIndex(t => t.id === task.id);
       if (taskIndex !== -1) {
-        tasks.value[taskIndex].start = start.toISOString().slice(0, 10);
+        tasksData.value[taskIndex].begunAt = start.toISOString().slice(0, 10);
         const diffTime = Math.abs(end.getTime() - start.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        tasks.value[taskIndex].duration = diffDays;
+        tasksData.value[taskIndex].duration = diffDays;
       }
     },
-    on_progress_change: (task: Task, progress: number) => {
+    on_progress_change: (task: GanttInterface, progress: number) => {
       // Update the task progress in our data
-      const taskIndex = tasks.value.findIndex(t => t.id === task.id);
+      const taskIndex = tasksData.value.findIndex(t => t.id === task.id);
       if (taskIndex !== -1) {
-        tasks.value[taskIndex].progress = progress;
+        tasksData.value[taskIndex].progress = progress;
       }
     }
   });
@@ -192,10 +223,12 @@ const initGantt = () => {
 // Lifecycle hooks
 onMounted(async () => {
   await loadFrappeGantt();
-  loadExampleTasks();
-  nextTick(() => {
-    initGantt();
-  });
+  await getGanttData();
+  await initGantt();
+
+  console.log("tasks.value", tasks.value)
+  console.log("tasksData.value", tasksData.value)
+
 });
 
 onBeforeUnmount(() => {
@@ -208,7 +241,3 @@ onBeforeUnmount(() => {
 // Watch for window resize to redraw the chart
 window.addEventListener('resize', updateGantt);
 </script>
-
-<style>
-@import '@/styles/gantt.css';
-</style>

@@ -1,6 +1,6 @@
-import type { Task, ApiGanttInterface } from '@/interface';
-import { extractDateFromISO, calculateEndDate } from '@/utils/date-utils';
-import { extractIdFromUri } from '@/utils/id-generator';
+import type { Task, ApiGanttInterface } from '@/interface/gantt.interface.ts';
+import { extractDateFromISO, calculateEndDate } from '@/utils/date.utils.ts';
+import { extractIdFromUri } from '@/views/private/gantt/logic/id-generator.gantt.logic.ts';
 
 /**
  * Adaptateur pour convertir les données de l'API vers le format Frappe Gantt

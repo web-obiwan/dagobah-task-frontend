@@ -16,7 +16,7 @@
         <TableBody>
           <TableRow v-for="(task, index) in tasks" :key="task.id || index">
             <TableCell class="font-medium">{{ task.name }}</TableCell>
-            <TableCell>{{ formatDate(task.start) }}</TableCell>
+            <TableCell>{{ formatDate(task.begunAt) }}</TableCell>
             <TableCell>{{ task.duration }} days</TableCell>
             <TableCell>
               <Button size="sm" variant="destructive" @click="$emit('remove-task', index)">
@@ -34,11 +34,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import type { Task } from "@/types/gantt.types";
+import type { GanttInterface } from "@/interface/gantt.interface.ts";
 
 // Define props and emits
 defineProps<{
-  tasks: Task[];
+  tasks: GanttInterface[];
   formatDate: (dateString: string) => string;
 }>();
 

@@ -63,7 +63,7 @@ import ProjectSelect from "@/components/issus/form/ProjectSelect.vue";
 import RepositorySelect from "@/components/issus/form/RepositorySelect.vue";
 import type { ProjectInterface } from "@/interface/project.interface.ts";
 import type { RepositoryInterface } from "@/interface/repository.interface.ts";
-import type { Task } from "@/types/gantt.types";
+import type { Task } from "@/interface/gantt.interface.ts";
 
 const props = defineProps<{
   project?: ProjectInterface;
